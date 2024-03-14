@@ -1,13 +1,16 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+'use strict';
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const app = express();
 
-var app = express();
+let indexRouter = require('./routes/index');
+let usersRouter = require('./routes/users');
+
+
 
 ///////////////////////
 const db = require('./models/index');
@@ -25,13 +28,12 @@ db.sequelize.sync()
           defaults: {login: 'admin2', password: 'admin2'}
         })
       ]);
-}).then(() => {
-    console.log('Admin user created.');
-}).catch((err) => {
-    console.log('Error syncing datebase or creating admin users.');
-    console.log(err);
-});
-
+    }).then(() => {
+        console.log('Admin user created.');
+    }).catch((err) => {
+        console.log('Error syncing datebase or creating admin users.');
+        console.log(err);
+    });
 
 
 // view engine setup

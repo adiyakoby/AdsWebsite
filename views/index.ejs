@@ -1,11 +1,53 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <title>Mars Images</title>
+</head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+  <div class="position-relative text-center">
+      <h1 class="text-center">Yad2 Copycat</h1>
+      <h5 class="text-center">Post stuff for sale</h5>
+    </div>
+  </div>
+  <div>
+    <nav class="navbar bg-primary-subtle">
+      <form class="container-fluid">
+        <div class="d-flex align-items-center"> <!-- Wrap the elements in a flex container -->
+          <button class="btn btn-outline-secondary me-2" type="button" id="home-button">Home</button>
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="flex: 1;"> <!-- Adjust input width to fill remaining space -->
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </div>
+
+        <div class="ms-auto">
+          <button class="btn btn-outline-secondary me-2" type="button" id="login-button">Login</button>
+          <button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#myModal">Who am i</button>
+        </div>
+      </form>
+
+      <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModal" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="MyModalHeader">Personal Details</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              Name: Adi Yakoby <br>
+              Email: adija@edu.hac.ac.il or adi.yakoby@gmail.com<br>
+              Phone: 052-2865080
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
   </body>
 </html>
