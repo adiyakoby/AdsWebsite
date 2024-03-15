@@ -22,11 +22,11 @@ db.sequelize.sync()
       return Promise.all([
           db.User.findOrCreate({
             where: {login: 'admin'},
-            defaults: {login: 'admin', password: 'admin'}
+            defaults: {login: 'admin', password: 'admin', accessLevel: 1}
           }),
         db.User.findOrCreate({
           where: {login: 'admin2'},
-          defaults: {login: 'admin2', password: 'admin2'}
+          defaults: {login: 'admin2', password: 'admin2', accessLevel: 1}
         })
       ]);
     }).then(() => {
