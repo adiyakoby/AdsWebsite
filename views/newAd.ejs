@@ -1,0 +1,39 @@
+<%- include('partials/header') %>
+<!-- rest of the page -->
+<body>
+<%- include('partials/navigator') %> <!-- Nav bar -->
+
+<form>
+    <div class="form-floating">
+        <input class="form-control" type="text" placeholder="title" id="floatingTextarea" required>
+        <label for="floatingTextarea">Title</label>
+
+        <div class="form-floating">
+            <textarea class="form-control" placeholder="Description" id="floatingTextarea2" style="height: 100px"></textarea>
+            <label for="floatingTextarea2">Description</label>
+        </div>
+
+        <div class="form-floating">
+            <input class="form-control" type="number" placeholder="Price" id="price" required>
+            <label for="price">Price</label>
+        </div>
+
+
+        <div class="form-floating">
+            <input type="email" class="form-control" id="email" placeholder="name@example.com" required>
+            <label for="email" class>Email address</label>
+        </div>
+
+        <div class="form-floating">
+            <input type="tel" class="form-control" id="phoneNumber" placeholder="Enter phone number" name="phoneNumber" pattern="[0-9]{3}-[0-9]{7}" required>
+            <label for="phoneNumber">Phone Number</label>
+        </div>
+
+
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+
+<!-- end of the page -->
+<%- include('partials/footer') %>
