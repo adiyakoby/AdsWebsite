@@ -2,6 +2,7 @@
 
 const createError = require('http-errors');
 const express = require('express');
+const session = require('express-session');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
@@ -34,6 +35,14 @@ db.sequelize.sync()
         console.log('Error syncing datebase or creating admin users.');
         console.log(err);
     });
+
+// enable sessions
+app.use(session({
+    secret:"somesecretkey",
+    resave: false, // Force save of session for each request
+    saveUninitialized: false, // Save a session that is new, but has not been modified
+    cookie: {maxAge: 10*1000 } // milliseconds!
+}));
 
 
 // view engine setup
