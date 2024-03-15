@@ -41,7 +41,6 @@ app.use(session({
     secret:"somesecretkey",
     resave: false, // Force save of session for each request
     saveUninitialized: false, // Save a session that is new, but has not been modified
-    cookie: {maxAge: 10*1000 } // milliseconds!
 }));
 
 
