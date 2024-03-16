@@ -5,7 +5,7 @@ const db = require("../models");
 const validateUserAccess = async function (name, pass) {
     const user = await db.User.findOne({where: {login: name}});
     if (user) {
-        return user.password === pass;
+        return user.comparePassword(pass);
     }
     return false;
 }
