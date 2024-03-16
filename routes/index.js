@@ -1,10 +1,12 @@
-var express = require('express');
-var router = express.Router();
+let express = require('express');
+let router = express.Router();
+const api = require("../controllers/apiController")
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-
-  res.render('index', { title: 'Express' });
+router.get('/', async function (req, res, next) {
+  const ads = await api.getAllAds(req, res);
+  console.log(ads.json());
+  res.render('index');
 });
 
 router.get('/newAd', function(req, res, next) {

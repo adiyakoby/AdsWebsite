@@ -27,6 +27,11 @@ db.sequelize.sync()
         db.User.findOrCreate({
           where: {login: 'admin2'},
           defaults: {login: 'admin2', password: 'admin2', accessLevel: 1}
+        }),
+        db.Ad.findOrCreate({
+            where: {title: "Example1"},
+            defaults: {title: "Example1", description: "description example.", price: 100,
+            phone: "02-6517289", email: "example@example.com"}
         })
       ]);
     }).then(() => {
@@ -38,7 +43,7 @@ db.sequelize.sync()
 
 // enable sessions
 app.use(session({
-    secret:"somesecretkey",
+    secret:"ourSecretSource",
     resave: false, // Force save of session for each request
     saveUninitialized: false, // Save a session that is new, but has not been modified
 }));

@@ -20,9 +20,6 @@ module.exports = (sequelize) => {
         };
 
         async comparePassword(pass) {
-            console.log('the hash is', this.password);
-            console.log('the PASS is', pass);
-
             return bcrypt.compare(pass, this.password);
         };
     }
@@ -31,7 +28,7 @@ module.exports = (sequelize) => {
 
         login: {
             type: DataTypes.STRING,
-            allowNull: false, // constraint level validation (SQL level validation)
+            allowNull: false,
             unique: true
 
         },
