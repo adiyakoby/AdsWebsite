@@ -15,7 +15,7 @@ router.post('/login',  async function (req, res, next) {
     res.render('adminPage');
   }
   else {
-    res.render('login');
+    res.redirect('/login');
   }
 });
 

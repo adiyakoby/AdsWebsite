@@ -2,8 +2,17 @@ const db = require("../models");
 const { Sequelize } = require("sequelize");
 
 module.exports = {
-    async getAllAds(req, res) {
-        return await db.Ad.findAll();
+    async getAllAds() {
+        fetch('./api/allAds')
+            .then((response) => {
+                if (response.status !== 200)
+                    throw new Error(response.statusText);
+                return response.json();
+
+            })
+            .catch((err) => {
+                console.log('Error message:', err);
+            });
     }
 
 };

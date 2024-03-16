@@ -1,0 +1,26 @@
+<%- include('partials/header') %>
+<!-- rest of the page -->
+
+<body>
+<%- include('partials/navigator') %> <!-- Nav bar -->
+
+  <div class="container-fluid p-5" >
+    <div class="row row-cols-1 row-cols-md-3 g-4" id="ads-container">
+
+
+    </div>
+  </div>
+
+<div class="d-none d-flex justify-content-center caption-overlay position-absolute justify-content-center align-items-center top-0 start-0 w-100 h-100" id="spinner-loader">
+  <div class="spinner-border"  style="width: 5rem; height: 5rem;" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+
+<script src="/javascripts/homePage.js"></script>
+
+
+<!-- end of the page -->
+<%- include('partials/footer') %>
+
+
