@@ -1,11 +1,12 @@
 
-<div class="position-relative text-center">
+<div class="position-relative text-center bg-info bg-opacity-10 border border-info border-start-0 rounded">
     <h1 class="text-center">Yad2 Copycat</h1>
     <h5 class="text-center">Post stuff for sale</h5>
 </div>
 
 <div> <!-- start of nav-->
     <nav class="navbar bg-primary-subtle">
+
         <form class="container-fluid">
             <div class="d-flex align-items-center">
                 <a class="btn btn-outline-secondary me-2" type="button" href="/">Home</a>
@@ -16,7 +17,13 @@
             <a class="btn btn-outline-secondary mx-auto" type="button" href="/newAd">Post new Ad</a>
 
             <div class="ms-auto">
-                <a class="btn btn-outline-secondary me-2" type="button" href="/login">Login</a>
+                <% if (typeof info !== 'undefined' && info.loggedIn === true) { %>
+                    <a class="btn btn-primary me-2" type="button" href="/users/admin">Admin Page</a>
+                    <a class="btn btn-outline-secondary me-2" type="button" href="/logout">Logout</a>
+                <% } else { %>
+                    <a class="btn btn-outline-secondary me-2" type="button" href="/login">Login</a>
+                <% } %>
+
                 <a class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#myModal" href="#">Who am i</a>
             </div>
         </form>

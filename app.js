@@ -32,7 +32,8 @@ db.sequelize.sync()
         db.Ad.findOrCreate({
             where: {title: "Example1"},
             defaults: {title: "Example1", description: "description example.", price: 100,
-            phone: "02-6517289", email: "example@example.com"}
+            phone: "02-6517289", email: "example@example.com"},
+            isApproved: false
         })
       ]);
     }).then(() => {

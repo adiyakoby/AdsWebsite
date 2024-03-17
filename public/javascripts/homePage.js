@@ -5,7 +5,7 @@
     const spinner = document.getElementById("spinner-loader");
 
     document.addEventListener('DOMContentLoaded', async function () {
-        const ads = await fetchData("/api/allAds");
+        const ads = await fetchData("/api/approvedAds");
         ads.forEach(ad => adsContainer.appendChild(createCustomCard(ad)));
     });
 
