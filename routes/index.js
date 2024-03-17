@@ -12,7 +12,7 @@ router.get('/newAd', function(req, res, next) {
 });
 
 router.get('/login', function(req, res, next) {
-  res.render('login', { title: 'Express' });
+  res.render('login', { user:'', pass:'' });
 });
 
 module.exports = router;

@@ -1,16 +1,12 @@
 let express = require('express');
 let router = express.Router();
 const db = require('../models');
+const apiController = require("../controllers/apiController");
 
-    router.get('/allAds', async (req, res) => {
-        return db.Ad.findAll({ order: [['createdAt', 'DESC']]})
-            .then((ads) => res.send(ads))
-            .catch((err) => {
-                console.log('There was an error querying contacts', JSON.stringify(err))
-                err.error = 1; // some error code for client side
-                return res.status(400).send(err) // send the error to the client
-            });
-});
+router.get('/allAds', apiController.getAllAds); // get all ads
+
+router.post('/postAd', apiController.postAd);  // post new ad by sending the form.
+
 
 router.get('/contacts/:lastName', (req, res) => {
     return db.Contact.findAll({where: {lastName: req.params.lastName}})
@@ -21,17 +17,7 @@ router.get('/contacts/:lastName', (req, res) => {
         });
 });
 
-router.post('/postAd', async (req, res) => {
-    const { title, description, price, email, phone } = req.body;
-    try {
-        const ad = await db.Ad.create({ title, description, price, phone, email });
-        res.status(201).render('newAd');
-    }
-    catch(err) {
-        console.log('*** error creating a Ad', JSON.stringify(err))
-        return res.status(400).render('newAd', {message:err.message});
-    }
-});
+
 
 router.delete('/contacts/:id', (req, res) => {
     const id = parseInt(req.params.id);

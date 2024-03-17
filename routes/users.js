@@ -1,6 +1,6 @@
 let express = require('express');
 let router = express.Router();
-const {validateUserAccess} = require("../controllers/Authentication")
+const userController = require("../controllers/userController")
 
 
 const db = require("../models");
@@ -10,14 +10,6 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
-router.post('/login',  async function (req, res, next) {
-  if(await validateUserAccess(req.body.userName, req.body.password)){
-    res.render('adminPage');
-  }
-  else {
-    res.redirect('/login');
-  }
-});
-
+router.post('/login', userController.login);
 
 module.exports = router;

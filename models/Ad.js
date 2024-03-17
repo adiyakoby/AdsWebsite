@@ -13,14 +13,16 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                notEmpty: {msg: "Title cannot be empty."},
+                notEmpty: {
+                    args: true,
+                    msg: "Title cannot be empty."
+                },
                 len: [2, 20],
             }
         },
         description: {
             type: DataTypes.STRING,
             allowNull: true,
-            defaultValue: "No Description provided.",
             validate: {
                 len: [0, 200],
             }
@@ -29,22 +31,34 @@ module.exports = (sequelize) => {
             type: DataTypes.INTEGER,
             allowNull: false,
             validate: {
-                notEmpty: {msg: "price cannot be empty."},
+                notEmpty: {
+                    args: true,
+                    msg: "price cannot be empty."
+                },
                 isInt: true,
-                min: 0
+                min: {
+                    args: [0],
+                    msg: "price must be positive."
+                }
             }
         },
         phone: {
             type: DataTypes.STRING,
             allowNull: false,
-            defaultValue: "Not provided."
+
         },
         email: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                notEmpty: {msg: "Email cannot be empty."},
-                isEmail: {msg: "Must contain valid email."}
+                notEmpty: {
+                    args: true,
+                    msg: "Email cannot be empty."
+                },
+                isEmail: {
+                    args: true,
+                    msg: "Must contain valid email."
+                }
             }
         },
         isApproved: {
