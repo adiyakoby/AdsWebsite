@@ -7,9 +7,6 @@
     document.addEventListener('DOMContentLoaded', async function () {
         const ads = await fetchData("/api/allAds");
         ads.forEach(ad => adsContainer.appendChild(createCustomCard(ad)));
-        //ads.forEach(e => console.log("asdasd"));
-
-
     });
 
     const fetchData = async function (url) {
