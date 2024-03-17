@@ -29,7 +29,7 @@ router.post('/postAd', async (req, res) => {
     }
     catch(err) {
         console.log('*** error creating a Ad', JSON.stringify(err))
-        return res.status(400).render('error', {message:err.message});
+        return res.status(400).render('newAd', {message:err.message});
     }
 });
 

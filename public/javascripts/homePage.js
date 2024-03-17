@@ -17,7 +17,7 @@
             return response.json();
         } catch (err) {
             console.log('Error message:', err);
-            throw err; // Re-throw the error so it can be caught by the caller if needed
+            throw err;
         }
     }
     const createCustomCard = function (ad) {

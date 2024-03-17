@@ -47,6 +47,11 @@ module.exports = (sequelize) => {
                 isEmail: {msg: "Must contain valid email."}
             }
         },
+        isApproved: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false //ads not aprroved when poseted
+        },
 
     }, {
         sequelize, // We need to pass the connection instance

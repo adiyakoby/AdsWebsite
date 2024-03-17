@@ -47,6 +47,7 @@ app.use(session({
     secret:"ourSecretSource",
     resave: false, // Force save of session for each request
     saveUninitialized: false, // Save a session that is new, but has not been modified
+    //cookie: { maxAge: 2 * 60 * 1000 }
 }));
 
 

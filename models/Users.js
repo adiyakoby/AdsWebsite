@@ -32,7 +32,6 @@ module.exports = (sequelize) => {
             unique: true,
             validate: {
                 notEmpty: true,
-                isNumeric: false,
                 len: [3,20]
             }
 

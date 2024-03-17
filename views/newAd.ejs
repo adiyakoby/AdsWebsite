@@ -5,11 +5,11 @@
 
 <form action="/api/postAd" method="post">
     <div class="form-floating">
-        <input class="form-control" type="text" placeholder="title" id="title" name="title" required>
+        <input class="form-control" type="text" placeholder="title" id="title" name="title" minlength="1" maxlength="20" required>
         <label for="title">Title</label>
 
         <div class="form-floating">
-            <textarea class="form-control" placeholder="Description" id="description" name="description" style="height: 100px"></textarea>
+            <textarea class="form-control" placeholder="Description" id="description" minlength="0" maxlength="200" name="description" style="height: 100px"></textarea>
             <label for="description">Description</label>
         </div>
 
@@ -25,7 +25,7 @@
         </div>
 
         <div class="form-floating">
-            <input type="tel" class="form-control" id="phone" placeholder="Enter phone number" name="phone" pattern="[0-9]{2,3}-[0-9]{7}">
+            <input type="tel" class="form-control" id="phone" placeholder="Enter phone number" name="phone" maxlength="11" pattern="[0-9]{2,3}-[0-9]{7}">
             <label for="phone">Phone Number</label>
         </div>
 
