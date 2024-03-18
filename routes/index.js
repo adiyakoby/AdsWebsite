@@ -11,6 +11,10 @@ router.get('/', async function (req, res) {
   res.render('homePage', { info: {loggedIn: req.session.loggedIn || false ,username: '', password: ''} });
 });
 
+router.get('/success', function(req, res) {
+  res.render('success');
+});
+
 router.get('/newAd', function(req, res) {
   res.render('newAd', {errors: {} ,info: {loggedIn: req.session.loggedIn || false ,username: '', password: ''}, formData: {} });
 });

@@ -63,7 +63,7 @@ module.exports = {
             //     info: {loggedIn: req.session.loggedIn || false},
             //     formData: {}
             // });
-            res.redirect('/newad');
+            res.redirect('/success');
         }
         catch(err) {
             console.log('*** error creating a Ad', JSON.stringify(err))
