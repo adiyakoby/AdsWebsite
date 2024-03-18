@@ -26,62 +26,58 @@
         }
     }
     const createCustomCard = function (ad) {
+
         const colDiv = document.createElement('div');
-        colDiv.classList.add('col');
+        colDiv.classList.add('col', 'mb-4');
 
         const cardDiv = document.createElement('div');
-        cardDiv.classList.add('card', 'h-100', 'border-primary');
+        cardDiv.classList.add('card', 'h-100', 'shadow');
 
         const cardBodyDiv = document.createElement('div');
         cardBodyDiv.classList.add('card-body');
 
         const cardTitle = document.createElement('h5');
-        cardTitle.classList.add('card-title');
+        cardTitle.classList.add('card-title', 'mb-3');
         cardTitle.textContent = ad.title;
 
         const cardText = document.createElement('p');
-        cardText.classList.add('card-text');
+        cardText.classList.add('card-text', 'mb-4');
         cardText.textContent = ad.description;
 
         const listGroup = document.createElement('ul');
         listGroup.classList.add('list-group', 'list-group-flush');
 
-        const listItemPrice = document.createElement('li');
-        listItemPrice.classList.add('list-group-item', 'border-primary');
-        listItemPrice.textContent = `price: ${ad.price}`;
-
-        const listItemPhone = document.createElement('li');
-        listItemPhone.classList.add('list-group-item', 'border-primary');
-        listItemPhone.textContent = `phone number: ${ad.phone}`;
-
-        const listItemEmail = document.createElement('li');
-        listItemEmail.classList.add('list-group-item');
-        listItemEmail.textContent = `email: ${ad.email}`;
-
+        const listItemPrice = createListItem('Price', ad.price);
+        const listItemPhone = createListItem('Phone Number', ad.phone);
+        const listItemEmail = createListItem('Email', ad.email);
         const cardFooterDiv = document.createElement('div');
-        cardFooterDiv.classList.add('card-footer');
+        cardFooterDiv.classList.add('card-footer', 'text-muted');
 
         const smallText = document.createElement('small');
-        smallText.classList.add('text-body-secondary');
-        smallText.textContent = `Last updated ${Math.floor((new Date() - new Date(ad.createdAt)) / (1000*60))} mins ago`;
+        smallText.textContent = `Last updated ${Math.floor((new Date() - new Date(ad.createdAt)) / (1000 * 60))} mins ago`;
 
+        // Append elements to card
         cardBodyDiv.appendChild(cardTitle);
         cardBodyDiv.appendChild(cardText);
-
         listGroup.appendChild(listItemPrice);
-        if(ad.phone !== '' && ad.phone !== undefined)
-            listGroup.appendChild(listItemPhone);
+        if (ad.phone) listGroup.appendChild(listItemPhone);
         listGroup.appendChild(listItemEmail);
 
-        cardBodyDiv.appendChild(listGroup);
-
         cardFooterDiv.appendChild(smallText);
-
         cardDiv.appendChild(cardBodyDiv);
+        cardDiv.appendChild(listGroup);
         cardDiv.appendChild(cardFooterDiv);
 
         colDiv.appendChild(cardDiv);
 
         return colDiv;
     }
+
+    const createListItem = function (label, value) {
+        const listItem = document.createElement('li');
+        listItem.classList.add('list-group-item', 'border-0', 'py-1');
+        listItem.innerHTML = `<strong>${label}:</strong> ${value}`;
+        return listItem;
+    }
+
 })();

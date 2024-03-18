@@ -12,7 +12,7 @@ router.get('/', async function (req, res) {
 });
 
 router.get('/success', function(req, res) {
-  res.render('success');
+  res.render('success',{ info: {loggedIn: req.session.loggedIn || false ,username: '', password: ''}});
 });
 
 router.get('/newAd', function(req, res) {

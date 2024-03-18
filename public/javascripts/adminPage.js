@@ -87,89 +87,82 @@
     }
 
     const createCustomCard = function (ad, adType) {
+
         const colDiv = document.createElement('div');
-        colDiv.classList.add('col');
+        colDiv.classList.add('col', 'mb-4');
 
         const cardDiv = document.createElement('div');
-        cardDiv.classList.add('card', 'h-100', 'border-primary');
+        cardDiv.classList.add('card', 'h-100', 'border-0', 'shadow');
 
         const cardBodyDiv = document.createElement('div');
         cardBodyDiv.classList.add('card-body');
 
         const cardTitle = document.createElement('h5');
-        cardTitle.classList.add('card-title');
+        cardTitle.classList.add('card-title', 'mb-3');
         cardTitle.textContent = ad.title;
 
         const cardText = document.createElement('p');
-        cardText.classList.add('card-text');
+        cardText.classList.add('card-text', 'mb-4');
         cardText.textContent = ad.description;
 
         const listGroup = document.createElement('ul');
         listGroup.classList.add('list-group', 'list-group-flush');
 
-        const listItemPrice = document.createElement('li');
-        listItemPrice.classList.add('list-group-item', 'border-primary');
-        listItemPrice.textContent = `price: ${ad.price}`;
-
-        const listItemPhone = document.createElement('li');
-        listItemPhone.classList.add('list-group-item', 'border-primary');
-        listItemPhone.textContent = `phone number: ${ad.phone}`;
-
-        const listItemEmail = document.createElement('li');
-        listItemEmail.classList.add('list-group-item');
-        listItemEmail.textContent = `email: ${ad.email}`;
-
+        const listItemPrice = createListItem('Price', ad.price);
+        const listItemPhone = createListItem('Phone Number', ad.phone);
+        const listItemEmail = createListItem('Email', ad.email);
         const cardFooterDiv = document.createElement('div');
-        cardFooterDiv.classList.add('card-footer');
+        cardFooterDiv.classList.add('card-footer', 'text-muted');
 
         const smallText = document.createElement('small');
-        smallText.classList.add('text-body-secondary');
-        smallText.textContent = `Last updated ${Math.floor((new Date() - new Date(ad.createdAt)) / (1000*60))} mins ago`;
+        smallText.textContent = `Last updated ${Math.floor((new Date() - new Date(ad.createdAt)) / (1000 * 60))} mins ago`;
+
 
         const buttonGroup = document.createElement('div');
-        buttonGroup.classList.add('d-flex', 'justify-content-center', 'mb-3');
+        buttonGroup.classList.add('d-flex', 'justify-content-center');
 
-        if(typeof adType !== 'undefined' && adType === 'pending') {
-
-            const buttonV = document.createElement('button');
-            buttonV.classList.add('btn', 'btn-success', 'me-2', 'col-5');
-            buttonV.textContent = 'V';
-
-            buttonV.setAttribute('data-ad-id', ad.id);
-            buttonV.addEventListener('click', approveAd);
-
+        // Create approve button if adType is pending
+        if (adType === 'pending') {
+            const buttonV = createButton('V', 'btn-success', ad.id, approveAd);
             buttonGroup.appendChild(buttonV);
         }
-        const buttonX = document.createElement('button');
 
-        buttonX.classList.add('btn', 'btn-danger', 'col-5');
-        buttonX.textContent = 'X';
-
-        buttonX.setAttribute('data-ad-id', ad.id);
-        buttonX.addEventListener('click', deleteAd);
-
+        // Create delete button
+        const buttonX = createButton('X', 'btn-danger', ad.id, deleteAd);
         buttonGroup.appendChild(buttonX);
 
-
         // Append elements to card
-        cardDiv.appendChild(buttonGroup);
-        cardDiv.appendChild(cardBodyDiv);
-        cardDiv.appendChild(cardFooterDiv);
-
         cardBodyDiv.appendChild(cardTitle);
         cardBodyDiv.appendChild(cardText);
-
         listGroup.appendChild(listItemPrice);
-        if (ad.phone !== '' && ad.phone !== undefined)
-            listGroup.appendChild(listItemPhone);
+        if (ad.phone) listGroup.appendChild(listItemPhone);
         listGroup.appendChild(listItemEmail);
 
         cardFooterDiv.appendChild(smallText);
 
         colDiv.appendChild(cardDiv);
-        cardBodyDiv.appendChild(listGroup);
+        cardDiv.appendChild(cardBodyDiv);
+        cardDiv.appendChild(listGroup);
+        cardDiv.appendChild(cardFooterDiv);
+        cardDiv.appendChild(buttonGroup);
 
         return colDiv;
+    }
+
+    const createListItem = function (label, value) {
+        const listItem = document.createElement('li');
+        listItem.classList.add('list-group-item', 'border-0', 'py-1');
+        listItem.innerHTML = `<strong>${label}:</strong> ${value}`;
+        return listItem;
+    }
+
+    const createButton = function (text, className, dataId, eventListener) {
+        const button = document.createElement('button');
+        button.classList.add('btn', className, 'me-2', 'col-3', 'fs-5');
+        button.textContent = text;
+        button.setAttribute('data-ad-id', dataId);
+        button.addEventListener('click', eventListener);
+        return button;
     }
 
     const approveAd = async function (btn) {
@@ -197,7 +190,6 @@
 
 
     }
-
     /**
      * Creates a toast notification body.
      * @param {string} header - The header text for the toast notification.
@@ -205,15 +197,21 @@
      * @returns {string} - The HTML string for the toast body.
      */
     const toastBodyCreator = (header, msg) => {
-        let success = header.toLowerCase() === "approved"  || header.toLowerCase() === "deleted" ? 'success' : 'danger';
-        return `<div class="toast-header text-bg-${success}">
-                <strong class="me-auto">Ad ${header} !</strong>
-                <small>Now</small>
-                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                </div>
-                <div class="toast-body ">
-                    ${msg}
-                </div>`
+        const success = header.toLowerCase() === "approved" || header.toLowerCase() === "deleted";
+        const colorClass = success ? 'bg-success' : 'bg-danger';
+        const iconClass = success ? 'bi bi-check-circle-fill' : 'bi bi-x-circle-fill';
+
+        return `
+        <div class="toast-header ${colorClass} text-white">
+            <i class="${iconClass} me-2"></i>
+            <strong class="me-auto">${header}!</strong>
+            <small class="text-muted">Now</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            ${msg}
+        </div>
+    `;
     };
 
     /**
@@ -223,8 +221,14 @@
      */
     const showToast = (header, msg) => {
         toastLive.innerHTML = toastBodyCreator(header, msg);
-        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLive);
-        toastBootstrap.show();
+
+        const toastInstance = new bootstrap.Toast(toastLive, {
+            animation: true,
+            delay: 3000 // Adjust the delay as needed
+        });
+
+        toastInstance.show();
     };
+
 
 })();
