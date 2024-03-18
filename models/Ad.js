@@ -17,14 +17,20 @@ module.exports = (sequelize) => {
                     args: true,
                     msg: "Title cannot be empty."
                 },
-                len: [2, 20],
+                len: {
+                    args:[2, 20],
+                    msg: "Title length must be between 2-20 characters."
+                    }
             }
         },
         description: {
             type: DataTypes.STRING,
             allowNull: true,
             validate: {
-                len: [0, 200],
+                len: {
+                    args: [0, 200],
+                    msg: "Description length must be between 0-200 characters."
+                    }
             }
         },
         price: {
@@ -45,6 +51,12 @@ module.exports = (sequelize) => {
         phone: {
             type: DataTypes.STRING,
             allowNull: false,
+            validate: {
+                is: {
+                    args: /(^\d{2,3}-\d{7}$|)/,
+                    msg: "Phone number isn't valid format.",
+                },
+            }
 
         },
         email: {
@@ -57,7 +69,7 @@ module.exports = (sequelize) => {
                 },
                 isEmail: {
                     args: true,
-                    msg: "Must contain valid email."
+                    msg: "Email isn't valid, please provide valid email."
                 }
             }
         },

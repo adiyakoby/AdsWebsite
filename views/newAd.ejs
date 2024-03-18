@@ -3,6 +3,9 @@
 <body>
 <%- include('partials/navigator') %> <!-- Nav bar -->
 
+<div><h1><%=errors.message%></h1></div>
+
+
 <form action="/api/postAd" method="post">
     <div class="form-floating">
         <input class="form-control" type="text" placeholder="title" id="title" name="title" minlength="1" maxlength="20" required>

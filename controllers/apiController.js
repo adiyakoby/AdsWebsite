@@ -53,7 +53,7 @@ module.exports = {
         catch(err) {
             console.log('*** error creating a Ad', JSON.stringify(err))
             if(err.name === "SequelizeValidationError")
-                return res.render('newAd', {message:err.message});
+                return res.render('newAd', {errors: err});
         }
     },
 
