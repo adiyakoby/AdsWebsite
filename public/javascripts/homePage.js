@@ -12,19 +12,21 @@
         ads.forEach(ad => adsContainer.appendChild(createCustomCard(ad)));
 
         searchButton.addEventListener('click', async function (event) {
-            adsContainer.innerText = '';
-            const ads = await fetchData(`/api/approvedAds/${encodeURIComponent(searchInput.value.trim())}`);
-            ads.forEach(ad => adsContainer.appendChild(createCustomCard(ad)));
+            await generateAds();
         })
 
         searchInput.addEventListener('keypress', async function (event) {
             if (event.key === 'Enter') {
-                adsContainer.innerText = '';
-                const ads = await fetchData(`/api/approvedAds/${encodeURIComponent(searchInput.value.trim())}`);
-                ads.forEach(ad => adsContainer.appendChild(createCustomCard(ad)));
+                await generateAds();
             }
         });
     });
+
+    const generateAds = async function () {
+        adsContainer.innerText = '';
+        const ads = await fetchData(`/api/approvedAds/${encodeURIComponent(searchInput.value.trim())}`);
+        ads.forEach(ad => adsContainer.appendChild(createCustomCard(ad)));
+    }
 
     const fetchData = async function (url) {
         try {
