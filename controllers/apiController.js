@@ -60,7 +60,8 @@ module.exports = {
             await db.Ad.create({ title, description, price, phone, email });
             res.status(201).render('newAd', {
                 errors: {},
-                info: {loggedIn: req.session.loggedIn || false}
+                info: {loggedIn: req.session.loggedIn || false},
+                formData: {}
             });
         }
         catch(err) {
@@ -70,7 +71,8 @@ module.exports = {
                 console.log(errors)
                 return res.render('newAd', {
                     errors: errors,
-                    info: {loggedIn: req.session.loggedIn || false ,username: '', password: ''}
+                    info: {loggedIn: req.session.loggedIn || false ,username: '', password: ''},
+                    formData: {title: title, description: description, price: price, email: email, phone: phone}
                 })
             } else {
                 res.status(500).send("Something bad happened, please try again later.", err.message)
