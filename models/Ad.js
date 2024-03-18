@@ -53,10 +53,10 @@ module.exports = (sequelize) => {
         },
         phone: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
             validate: {
                 is: {
-                    args: /(^\d{2,3}-\d{7}$|)/,
+                    args: /^(\d{2,3}-\d{7})?$/,
                     msg: "Phone number isn't valid format.",
                 },
             }
