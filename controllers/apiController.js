@@ -58,11 +58,6 @@ module.exports = {
         const { title, description, price, email, phone } = req.body;
         try {
             await db.Ad.create({ title, description, price, phone, email });
-            // res.render('newAd', {
-            //     errors: {},
-            //     info: {loggedIn: req.session.loggedIn || false},
-            //     formData: {}
-            // });
             res.redirect('/success');
         }
         catch(err) {
