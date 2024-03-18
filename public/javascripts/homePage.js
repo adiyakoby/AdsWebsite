@@ -3,10 +3,27 @@
 (function () {
     const adsContainer = document.getElementById("ads-container");
     const spinner = document.getElementById("spinner-loader");
+    const searchButton = document.getElementById("search");
+    const searchInput = document.getElementById("search-input");
+
 
     document.addEventListener('DOMContentLoaded', async function () {
         const ads = await fetchData("/api/approvedAds");
         ads.forEach(ad => adsContainer.appendChild(createCustomCard(ad)));
+
+        searchButton.addEventListener('click', async function (event) {
+            adsContainer.innerText = '';
+            const ads = await fetchData(`/api/approvedAds/${encodeURIComponent(searchInput.value.trim())}`);
+            ads.forEach(ad => adsContainer.appendChild(createCustomCard(ad)));
+        })
+
+        searchInput.addEventListener('keypress', async function (event) {
+            if (event.key === 'Enter') {
+                adsContainer.innerText = '';
+                const ads = await fetchData(`/api/approvedAds/${encodeURIComponent(searchInput.value.trim())}`);
+                ads.forEach(ad => adsContainer.appendChild(createCustomCard(ad)));
+            }
+        });
     });
 
     const fetchData = async function (url) {

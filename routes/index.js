@@ -1,5 +1,6 @@
 let express = require('express');
 let router = express.Router();
+const apiController = require("../controllers/apiController");
 
 
 /* GET home page. */
@@ -10,6 +11,8 @@ router.get('/', async function (req, res) {
   // });
   res.render('homePage', { info: {loggedIn: req.session.loggedIn || false ,username: '', password: ''} });
 });
+
+
 
 router.get('/success', function(req, res) {
   res.render('success',{ info: {loggedIn: req.session.loggedIn || false ,username: '', password: ''}});

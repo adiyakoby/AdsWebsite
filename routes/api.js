@@ -7,6 +7,8 @@ router.get('/allAds', apiController.getAllAds); // get all ads
 
 router.get('/approvedAds', apiController.getApprovedAds); // get all ads
 
+router.get('/approvedAds/:string', apiController.searchForAds); // get all ads
+
 router.get('/pendingAds', apiController.getPendingAds); // get all ads
 
 router.post('/postAd', apiController.postAd);  // post new ad by sending the form.

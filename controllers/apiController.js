@@ -77,6 +77,21 @@ module.exports = {
         }
     },
 
+    async searchForAds(req, res) {
+        try {
+
+            await db.Ad.findAll({ where:{title: { [Sequelize.Op.like]: `%${req.params.string}%`} ,isApproved: true}, order: [['createdAt', 'DESC']]})
+                .then((ads) => res.status(200).send(ads))
+                .catch((err) => {
+                    console.log('There was an error querying contacts', JSON.stringify(err))
+                    err.error = 1; // some error code for client side
+                    return res.status(400).send(err) // send the error to the client
+                });
+        }catch (err) {
+            console.log('There was an error querying contacts', JSON.stringify(err))
+        }
+    },
+
     async approveAd(req, res) {
         try {
             const ad = await db.Ad.findByPk(req.params.id);
