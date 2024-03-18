@@ -31,9 +31,9 @@
 
         if (titleLength === 0 || titleLength > 20) {
             titleElement.classList.add("is-invalid");
-            titleErrorElement.textContent = 'Title cannot be empty and must exceed 20 characters.'
+            titleElement.nextElementSibling.textContent = 'Title cannot be empty and must exceed 20 characters.'
         } else {
-            resetError(titleElement, titleErrorElement);
+            resetError(titleElement);
         }
     }
 
@@ -43,9 +43,9 @@
 
         if (descriptionLength > 200) {
             descriptionElement.classList.add("is-invalid");
-            descriptionErrorElement.textContent = 'Description must not exceed 200 characters.';
+            descriptionElement.nextElementSibling.textContent = 'Description must not exceed 200 characters.';
         } else {
-            resetError(descriptionElement, descriptionErrorElement);
+            resetError(descriptionElement);
         }
     }
 
@@ -54,9 +54,9 @@
 
         if (isNaN(priceValue) || priceValue <= 0) {
             priceElement.classList.add("is-invalid");
-            priceErrorElement.textContent = 'Price must be a valid number greater than 0.';
+            priceElement.nextElementSibling.textContent = 'Price must be a valid number greater than 0.';
         } else {
-            resetError(priceElement, priceErrorElement);
+            resetError(priceElement);
         }
     }
 
@@ -66,9 +66,9 @@
 
         if (!emailPattern.test(emailValue)) {
             emailElement.classList.add("is-invalid");
-            emailErrorElement.textContent = 'Email must be in a valid format.';
+            emailElement.nextElementSibling.textContent = 'Email must be in a valid format.';
         } else {
-            resetError(emailElement, emailErrorElement);
+            resetError(emailElement);
         }
     }
 
@@ -78,15 +78,15 @@
 
         if (!phonePattern.test(phoneValue)) {
             phoneElement.classList.add("is-invalid");
-            phoneErrorElement.textContent = 'Phone number must be in the format XXX-XXXXXXX or XX-XXXXXXX.';
+            phoneElement.nextElementSibling.textContent = 'Phone number must be in the format XXX-XXXXXXX or XX-XXXXXXX.';
         } else {
-            resetError(phoneElement, phoneErrorElement);
+            resetError(phoneElement);
         }
     }
 
-    function resetError(element, errorElement) {
+    function resetError(element) {
         element.classList.remove("is-invalid");
-        errorElement.textContent = '';
+        element.nextElementSibling.textContent = '';
     }
 
 })();
