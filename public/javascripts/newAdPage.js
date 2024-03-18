@@ -3,15 +3,10 @@
 
 (function () {
     const titleElement = document.getElementById("title");
-    const titleErrorElement = document.getElementById("title-error");
     const descriptionElement = document.getElementById("description");
-    const descriptionErrorElement = document.getElementById("description-error");
     const priceElement = document.getElementById("price");
-    const priceErrorElement = document.getElementById("price-error");
     const emailElement = document.getElementById("email");
-    const emailErrorElement = document.getElementById("email-error");
     const phoneElement = document.getElementById("phone");
-    const phoneErrorElement = document.getElementById("phone-error");
 
 
     document.addEventListener('DOMContentLoaded',  function () {
