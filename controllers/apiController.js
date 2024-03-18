@@ -58,11 +58,12 @@ module.exports = {
         const { title, description, price, email, phone } = req.body;
         try {
             await db.Ad.create({ title, description, price, phone, email });
-            res.status(201).render('newAd', {
-                errors: {},
-                info: {loggedIn: req.session.loggedIn || false},
-                formData: {}
-            });
+            // res.render('newAd', {
+            //     errors: {},
+            //     info: {loggedIn: req.session.loggedIn || false},
+            //     formData: {}
+            // });
+            res.redirect('/newad');
         }
         catch(err) {
             console.log('*** error creating a Ad', JSON.stringify(err))
