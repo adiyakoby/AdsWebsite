@@ -11,13 +11,18 @@
 
     const fetchData = async function (url) {
         try {
+            spinner.classList.remove('d-none');
             const response = await fetch(url);
             if (response.status !== 200)
                 throw new Error(response.statusText);
+
+            spinner.classList.add('d-none');
             return response.json();
         } catch (err) {
             console.log('Error message:', err);
             throw err;
+        } finally {
+            spinner.classList.add('d-none');
         }
     }
     const createCustomCard = function (ad) {

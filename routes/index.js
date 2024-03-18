@@ -12,7 +12,7 @@ router.get('/', async function (req, res) {
 });
 
 router.get('/newAd', function(req, res) {
-  res.render('newAd', {errors:"hello" ,info: {loggedIn: req.session.loggedIn || false ,username: '', password: ''} });
+  res.render('newAd', {errors: {} ,info: {loggedIn: req.session.loggedIn || false ,username: '', password: ''} });
 });
 
 router.get('/logout', function (req, res) {

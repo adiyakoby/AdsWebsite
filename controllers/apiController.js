@@ -1,6 +1,15 @@
 const db = require("../models");
 const { Sequelize } = require("sequelize");
 
+
+const dbErrorHandler = function (e) {
+    const errors = {};
+    e.errors.forEach((item) => {
+        errors[item.path] = item.message;
+    });
+    return errors;
+}
+
 module.exports = {
     async getApprovedAds(req, res) {
         try {
@@ -44,16 +53,29 @@ module.exports = {
         }
     },
 
+
     async postAd(req, res) {
         const { title, description, price, email, phone } = req.body;
         try {
             await db.Ad.create({ title, description, price, phone, email });
-            res.status(201).render('newAd', { info: {loggedIn: req.session.loggedIn || false}});
+            res.status(201).render('newAd', {
+                errors: {},
+                info: {loggedIn: req.session.loggedIn || false}
+            });
         }
         catch(err) {
             console.log('*** error creating a Ad', JSON.stringify(err))
-            if(err.name === "SequelizeValidationError")
-                return res.render('newAd', {errors: err});
+            if(err.name === "SequelizeValidationError") {
+                const errors = dbErrorHandler(err);
+                console.log(errors)
+                return res.render('newAd', {
+                    errors: errors,
+                    info: {loggedIn: req.session.loggedIn || false ,username: '', password: ''}
+                })
+            } else {
+                res.status(500).send("Something bad happened, please try again later.", err.message)
+            }
+
         }
     },
 

@@ -18,7 +18,7 @@ module.exports = (sequelize) => {
                     msg: "Title cannot be empty."
                 },
                 len: {
-                    args:[2, 20],
+                    args:[1, 20],
                     msg: "Title length must be between 2-20 characters."
                     }
             }
@@ -40,12 +40,15 @@ module.exports = (sequelize) => {
                 notEmpty: {
                     args: true,
                     msg: "price cannot be empty."
-                },
-                isInt: true,
+                    },
+                isInt: {
+                    args: true,
+                    msg: 'price must be integer.'
+                    },
                 min: {
                     args: [0],
                     msg: "price must be positive."
-                }
+                    }
             }
         },
         phone: {

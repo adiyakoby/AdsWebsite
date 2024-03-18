@@ -3,33 +3,46 @@
 <body>
 <%- include('partials/navigator') %> <!-- Nav bar -->
 
-<div><h1><%=errors.message%></h1></div>
-
 
 <form action="/api/postAd" method="post">
     <div class="form-floating">
-        <input class="form-control" type="text" placeholder="title" id="title" name="title" minlength="1" maxlength="20" required>
+        <input class="form-control <%= errors.title ? 'is-invalid' : '' %>" type="text" placeholder="title" id="title" name="title" minlength="1" maxlength="20" required>
         <label for="title">Title</label>
+        <div class="invalid-feedback">
+            <%= errors.title  ? errors.title : '' %>
+        </div>
 
         <div class="form-floating">
-            <textarea class="form-control" placeholder="Description" id="description" minlength="0" maxlength="200" name="description" style="height: 100px"></textarea>
+            <textarea class="form-control <%= errors.description ? 'is-invalid' : '' %>" placeholder="Description" id="description" minlength="0" maxlength="200" name="description" style="height: 100px"></textarea>
             <label for="description">Description</label>
         </div>
+        <div class="invalid-feedback">
+            <%= errors.description  ? errors.description : '' %>
+        </div>
 
         <div class="form-floating">
-            <input class="form-control" type="number" placeholder="Price" id="price" name="price"  required>
+            <input class="form-control <%= errors.price ? 'is-invalid' : '' %>" type="number" placeholder="Price" id="price" name="price" min="0" required>
             <label for="price">Price</label>
         </div>
+        <div class="invalid-feedback">
+            <%= errors.price  ? errors.price : '' %>
+        </div>
 
 
         <div class="form-floating">
-            <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" required>
+            <input type="email" class="form-control <%= errors.email ?  'is-invalid' : '' %>" id="email" name="email" placeholder="name@example.com" required>
             <label for="email" class>Email address</label>
+        </div>
+        <div class="invalid-feedback">
+            <%= errors.email  ? errors.email : '' %>
         </div>
 
         <div class="form-floating">
-            <input type="tel" class="form-control" id="phone" placeholder="Enter phone number" name="phone" maxlength="11" pattern="[0-9]{2,3}-[0-9]{7}">
+            <input type="tel" class="form-control <%= errors.phone ?  'is-invalid' : '' %>" id="phone" placeholder="Enter phone number" name="phone" maxlength="11" pattern="[0-9]{2,3}-[0-9]{7}">
             <label for="phone">Phone Number</label>
+        </div>
+        <div class="invalid-feedback">
+            <%= errors.phone  ? errors.phone : '' %>
         </div>
 
 
@@ -37,6 +50,7 @@
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
+<script src="/javascripts/newAdPage.js"></script>
 
 <!-- end of the page -->
 <%- include('partials/footer') %>
