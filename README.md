@@ -39,9 +39,10 @@ The Ad Management System provides a RESTful API for interacting with ads and use
 ### Endpoints
 
 - **GET /api/ads**: Retrieve a list of all ads.
-- **GET /api/ads/:id**: Retrieve details of a specific ad by ID. 
-- **DELETE /api/ads/:id**: Delete an ad. 
+- **GET /api/ads/:id**: Retrieve details of a specific ad by ID.
 - **POST /api/ads**: Create a new ad.
+- **PUT /api/ads/:id**: Update (approve)an existing ad.
+- **DELETE /api/ads/:id**: Delete an ad.
 
 
 ### Authentication
