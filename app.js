@@ -10,7 +10,7 @@ const app = express();
 
 let indexRouter = require('./routes/index');
 let usersRouter = require('./routes/users');
-let apiRouter = require('./routes/api');
+let apiRouter = require('./routes/ads');
 
 
 
