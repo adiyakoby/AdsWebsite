@@ -12,7 +12,7 @@ router.get('/newAd', indexController.getNewAdPage);
 
 router.get('/logout', function (req, res) {
   req.session.loggedIn = false;
-  res.render('homePage', { info: {loggedIn: req.session.loggedIn ,username: '', password: ''}});
+  res.render('homePage');
 
 });
 

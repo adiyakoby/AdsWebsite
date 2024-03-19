@@ -21,7 +21,7 @@
 
             <a class="btn btn-outline-primary mx-2" type="button" href="/newAd">Post new Ad</a>
 
-            <% if (typeof info !== 'undefined' && info.loggedIn === true) { %>
+            <% if (loggedIn === true) { %>
                 <a class="btn btn-primary me-2" type="button" href="/users/admin">Admin Page</a>
                 <a class="btn btn-outline-primary me-2" type="button" href="/logout">Logout</a>
             <% } else { %>

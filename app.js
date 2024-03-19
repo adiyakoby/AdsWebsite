@@ -8,9 +8,12 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const app = express();
 
+const sessionMiddleware = require('./middlewares/sessionMiddleware');
+
+
 let indexRouter = require('./routes/index');
 let usersRouter = require('./routes/users');
-let apiRouter = require('./routes/ads');
+let adsRouter = require('./routes/ads');
 
 
 
@@ -62,11 +65,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Middleware to set session data
+app.use(sessionMiddleware);
 
 /* my routes */
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/api', apiRouter);
+app.use('/api', adsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

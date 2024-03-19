@@ -3,20 +3,20 @@
 module.exports = {
 
     getHomePage(req, res) {
-        res.render('homePage', { info: {loggedIn: req.session.loggedIn || false ,username: '', password: ''} });
+        res.render('homePage');
     },
 
     getSuccessPage(req, res) {
-        res.render('success',{ info: {loggedIn: req.session.loggedIn || false ,username: '', password: ''}});
+        res.render('success');
     },
 
     getNewAdPage(req, res) {
-        res.render('newAd', {errors: {} ,info: {loggedIn: req.session.loggedIn || false ,username: '', password: ''}, formData: {} });
+        res.render('newAd', {errors: {} , formData: {} });
     },
 
 
     getLoginPage(req, res) {
-        res.render('login', { info: {loggedIn: req.session.loggedIn || false ,username: '', password: ''}});
+        res.render('login');
     },
 
 

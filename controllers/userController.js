@@ -15,25 +15,19 @@ module.exports = {
         const check = await validateUserAccess(req.body.userName, req.body.password);
         if(check){
             req.session.loggedIn = true;
-            res.render('adminPage', {
-                info: {loggedIn: true ,username: '', password: ''}
-            });
+            res.render('adminPage');
         }
         else {
-            res.render('login', {
-                info: {loggedIn: false ,username: req.body.userName, password: req.body.password}
-                });
+            res.render('login');
         }
     },
 
     async isAdmin(req, res) {
         if(typeof req.session.loggedIn !== 'undefined' && req.session.loggedIn === true) {
-            res.render('adminPage', {
-                info: {loggedIn: true ,username: '', password: ''}
-            });
+            res.render('adminPage');
         }
         else {
-            res.render('login', { info: {loggedIn: false ,username: '', password: ''} });
+            res.render('login');
         }
 
 
