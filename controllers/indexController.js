@@ -19,6 +19,10 @@ module.exports = {
         res.render('login');
     },
 
+    getAdminPage(req, res) {
+      res.render('adminPage');
+    },
+
 
 
 };

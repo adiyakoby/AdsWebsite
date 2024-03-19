@@ -12,29 +12,21 @@ const validateUserAccess = async function  (name, pass) {
 module.exports = {
     async login(req, res) {
         try {
-            const check = await validateUserAccess(req.body.username, req.body.password);
-            if(check){
+            const { username, password } = req.body;
+            const isValidUser = await validateUserAccess(username, password);
+            if(isValidUser){
                 req.session.loggedIn = true;
-                res.render('adminPage');
+                res.redirect('/adminPage');
             }
             else {
                 res.render('login');
             }
         } catch (e) {
-            console.log("Something went wrong.", e.message)
+            console.log("Something went wrong.", e.message);
+            res.status(500).send('Internal Server Error');
         }
 
     },
 
-    async isAdmin(req, res) {
-        if(req.session.loggedIn === true) {
-            res.render('adminPage');
-        }
-        else {
-            res.render('login');
-        }
-
-
-    }
 };
 

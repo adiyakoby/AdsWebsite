@@ -1,6 +1,8 @@
 let express = require('express');
 let router = express.Router();
 const indexController = require("../controllers/indexController");
+const isAdmin = require('../middlewares/authentication');
+
 
 
 /* GET home page. */
@@ -17,5 +19,7 @@ router.get('/logout', function (req, res) {
 });
 
 router.get('/login', indexController.getLoginPage);
+
+router.get('/adminPage', isAdmin, indexController.getAdminPage);
 
 module.exports = router;
