@@ -1,4 +1,5 @@
 'use strict';
+const {getLastAd} = require('./adsController')
 
 module.exports = {
 
@@ -10,8 +11,14 @@ module.exports = {
         res.render('success');
     },
 
-    getNewAdPage(req, res) {
-        res.render('newAd', {errors: {} , formData: {} });
+    async getNewAdPage(req, res) {
+        if (req.cookies.lastAdPosted) {
+            const ad = await getLastAd(req, res);
+            res.locals.email = ad.email;
+            res.locals.updatedAt = ad.updatedAt;
+            res.locals.isApproved = ad.isApproved;
+        }
+        res.render('newAd', {errors: {}, formData: {}});
     },
 
 

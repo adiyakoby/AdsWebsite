@@ -8,6 +8,18 @@
         <div class="col-md-6">
             <div class="card shadow-lg p-4">
                 <h2 class="text-center mb-4">Create a New Ad</h2>
+
+                <% if (email) { %>
+                    <div class="alert <%= isApproved ? 'alert-success' : 'alert-warning' %>" role="alert">
+                        Welcome back <strong><%= email %></strong>,
+                        <% if (isApproved) { %>
+                            <br>Your previous ad was approved! and posted on <strong><%= updatedAt %></strong>
+                        <% } else { %>
+                            <br>Your previous ad is currently under review. Our team will address it shortly.
+                        <% } %>
+                    </div>
+                <% } %>
+
                 <div class="mb-3">
                     <label for="title" class="form-label">Title</label>
                     <input type="text" class="form-control <%= errors.title ? 'is-invalid' : '' %>" id="title" name="title" minlength="1" maxlength="20" value="<%= formData.title ? formData.title : '' %>" required>

@@ -59,14 +59,14 @@ module.exports = {
     async postAd(req, res) {
         const { title, description, price, email, phone } = req.body;
         try {
-            await db.Ad.create({ title, description, price, phone, email });
+            const ad = await db.Ad.create({ title, description, price, phone, email });
+            res.cookie('lastAdPosted', ad.id); // no maxAge so we will remember until user delete
             res.redirect('/success');
         }
         catch(err) {
             console.log('*** error creating a Ad', JSON.stringify(err))
             if(err.name === "SequelizeValidationError") {
                 const errors = dbErrorHandler(err);
-                console.log(errors)
                 return res.render('newAd', {
                     errors: errors,
                     formData: {title: title, description: description, price: price, email: email, phone: phone}
@@ -127,5 +127,15 @@ module.exports = {
         }
 
     },
+
+    async getLastAd(req, res) {
+        try {
+            const ad = await db.Ad.findByPk(req.cookies.lastAdPosted);
+            return ad || "";
+
+        }catch (e) {
+            console.log("Something went wrong.", e.message)
+        }
+    }
 
 };
