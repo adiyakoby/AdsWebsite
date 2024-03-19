@@ -57,9 +57,6 @@ module.exports = (sequelize) => {
             }
 
         },
-        accessLevel: {
-            type: DataTypes.INTEGER,
-        },
 
     }, {
         sequelize, // We need to pass the connection instance
