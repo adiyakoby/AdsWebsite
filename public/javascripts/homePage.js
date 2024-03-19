@@ -12,17 +12,17 @@
      * Event listener to ensure DOM content is fully loaded
      */
     document.addEventListener('DOMContentLoaded', async function () {
-        await generateApprovedAds(); // Load approved ads when DOM is loaded
+        await generateApprovedAds(''); // Load all approved ads when DOM is loaded
 
         // Event listener for search button click
         searchButton.addEventListener('click', async function (event) {
-            await generateApprovedAds(searchInput.value);
+            await generateApprovedAds(searchInput.value); // Load approved ads based on user input.
         })
 
         // Event listener for pressing Enter in search input
         searchInput.addEventListener('keypress', async function (event) {
             if (event.key === 'Enter') {
-                await generateApprovedAds(searchInput.value);
+                await generateApprovedAds(searchInput.value); // Load approved ads based on user input.
             }
         });
     });
