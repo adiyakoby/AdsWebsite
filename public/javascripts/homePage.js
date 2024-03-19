@@ -33,7 +33,7 @@
     const generateApprovedAds = async function() {
         try {
             spinner.classList.remove('d-none');
-            const ads = await fetchData("/approvedAds");
+            const ads = await fetchData("/api/approvedAds");
             updateAdsContainer(ads);
         } catch (error) {
             console.log('Error message:', error);
@@ -79,7 +79,7 @@
      */
     const generateAds = async function () {
         adsContainer.innerText = '';
-        const ads = await fetchData(`/approvedAds/${encodeURIComponent(searchInput.value.trim())}`);
+        const ads = await fetchData(`/api/approvedAds/${encodeURIComponent(searchInput.value.trim())}`);
         ads.forEach(ad => adsContainer.appendChild(createCustomCard(ad)));
     }
 

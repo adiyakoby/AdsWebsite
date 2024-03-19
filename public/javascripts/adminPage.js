@@ -18,7 +18,6 @@
      * Event listener to ensure DOM content is fully loaded
      */
     document.addEventListener('DOMContentLoaded', async function () {
-
         await fetchAds('pending');
 
         // Event listeners for switching between pending and approved ads
@@ -43,7 +42,6 @@
      * @param {string} adsType - The type of ads to fetch (pending or approved).
      */
     async function fetchAds(adsType) {
-
         spinner.classList.remove('d-none');
         try {
             await getAds(adsType);
@@ -78,9 +76,8 @@
      * @param {string} adType - The type of ads to retrieve (pending or approved).
      */
     const getAds = async function (adType) {
-        const res = await fetchData(`/${adType}Ads`);
+        const res = await fetchData(`/api/${adType}Ads`);
         const ads = await res.json();
-
         if(ads.length !== 0) {
             adsContainer.innerHTML = '';
             ads.forEach(ad => adsContainer.appendChild(createCustomCard(ad, adType)));
@@ -219,7 +216,7 @@
      * @param {Event} btn - The click event object of the button clicked.
      */
     const approveAd = async function (btn) {
-        const res = await fetchData(`/ads/${btn.srcElement.dataset.adId}`, "PUT");
+        const res = await fetchData(`/api/ads/${btn.srcElement.dataset.adId}`, "PUT");
         if(res.ok) {
             await fetchAds('pending');
             showToast("approved", adApprovedMessage)
@@ -234,7 +231,7 @@
      * @param {Event} btn - The click event object of the button clicked.
      */
     const deleteAd = async function (btn) {
-        const res = await fetchData(`/ads/${btn.srcElement.dataset.adId}`, "DELETE");
+        const res = await fetchData(`/api/ads/${btn.srcElement.dataset.adId}`, "DELETE");
         if(res.ok) {
             const adType = pendingAdsBtn.classList.contains('btn-primary') ? 'pending' : 'approved';
             await fetchAds(adType);

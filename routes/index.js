@@ -12,6 +12,6 @@ router.get('/newAd', indexController.getNewAdPage); // Route for rendering new a
 router.get('/login', indexController.getLoginPage); // Route for rendering login page
 router.get('/adminPage', isAdmin, indexController.getAdminPage); // Route for rendering admin page, with authentication middleware
 router.get('/success', indexController.getSuccessPage); // Route for rendering success page
-router.get('*', indexController.getHomePage); //catch all routes to home page
+
 
 module.exports = router;

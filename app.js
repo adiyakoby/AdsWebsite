@@ -69,9 +69,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(sessionMiddleware);
 
 /* my routes */
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/', adsRouter);
+app.use('/api', adsRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
