@@ -29,12 +29,11 @@ module.exports = {
      */
     async getNewAdPage(req, res) {
         try {
-            if (req.cookies.lastAdPosted) {
-                const ad = await getLastAd(req, res);
-                res.locals.email = ad.email;
-                res.locals.updatedAt = ad.updatedAt;
-                res.locals.isApproved = ad.isApproved;
-            }
+            const ad = await getLastAd(req, res);
+            res.locals.email = ad.email || "";
+            res.locals.updatedAt = ad.updatedAt || "";
+            res.locals.isApproved = ad.isApproved || "";
+
             res.render('newAd', {errors: {}, formData: {}});  // Render the new ad page with empty form data and errors object
         } catch (error) {
             console.error("Error in getNewAdPage:", error);
