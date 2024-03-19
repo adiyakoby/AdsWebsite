@@ -5,10 +5,6 @@ const apiController = require("../controllers/apiController");
 
 /* GET home page. */
 router.get('/', async function (req, res) {
-  // req.session.loggedIn = true;
-  // res.render('adminPage', {
-  //   info: {loggedIn: true ,username: '', password: ''}
-  // });
   res.render('homePage', { info: {loggedIn: req.session.loggedIn || false ,username: '', password: ''} });
 });
 
