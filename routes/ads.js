@@ -1,20 +1,23 @@
 let express = require('express');
 let router = express.Router();
 const apiController = require("../controllers/apiController");
+const isAdmin = require('../middlewares/authentication');
 
-router.get('/allAds', apiController.getAllAds); // get all ads
+router.get('/approvedAds', apiController.getApprovedAds); // get approved ads
 
-router.get('/approvedAds', apiController.getApprovedAds); // get all ads
-
-router.get('/approvedAds/:string', apiController.searchForAds); // get all ads
-
-router.get('/pendingAds', apiController.getPendingAds); // get all ads
+router.get('/approvedAds/:string', apiController.searchForAds); // get selected ads
 
 router.post('/postAd', apiController.postAd);  // post new ad by sending the form.
 
-router.put('/ads/:id', apiController.approveAd);
+// Admin routes
 
-router.delete('/ads/:id', apiController.deleteAd);
+router.get('/allAds', isAdmin ,apiController.getAllAds); // get all ads
+
+router.get('/pendingAds', isAdmin ,apiController.getPendingAds);
+
+router.put('/ads/:id', isAdmin, apiController.approveAd);
+
+router.delete('/ads/:id', isAdmin, apiController.deleteAd);
 
 
 module.exports = router;

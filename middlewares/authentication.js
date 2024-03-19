@@ -3,7 +3,7 @@
 const isAdmin = async (req, res, next) => {
     try {
         if (!req.session.loggedIn) {
-            return res.redirect('/login');
+            return res.status(401).render('login');
         }
         next()
     } catch (error) {

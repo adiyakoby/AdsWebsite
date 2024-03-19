@@ -12,6 +12,5 @@ router.get('/', function(req, res, next) {
 
 router.post('/login', userController.login);
 
-// router.get('/admin', userController.isAdmin);
 
 module.exports = router;
