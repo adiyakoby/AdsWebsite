@@ -24,22 +24,23 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-            <form class="d-flex mx-auto my-2 my-lg-0">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="flex: 1;">
-                <button class="btn btn-outline-primary" type="submit">Search</button>
-            </form>
-
             <a class="btn btn-outline-primary mx-2" type="button" href="/newAd">Post new Ad</a>
 
-            <a class="btn btn-primary me-2" type="button" href="/adminPage">Admin Page</a>
-            <a class="btn btn-outline-primary me-2" type="button" href="/users/logout">Logout</a>
+            <div class="ms-auto"> <!-- Added ms-auto class here -->
+                <% if (loggedIn === true) { %>
+                    <a class="btn btn-primary me-2" type="button" href="/adminPage">Admin Page</a>
+                    <a class="btn btn-outline-primary me-2" type="button" href="/users/logout">Logout</a>
+                <% } else { %>
+                    <a class="btn btn-outline-primary me-2" type="button" href="/login">Login</a>
+                <% } %>
 
-            <button class="btn btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#myModal">Who am i</button>
+                <button class="btn btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#myModal">Who am i</button>
+            </div>
+
         </div>
 
     </div>
 </nav>
-
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -67,6 +68,7 @@
 
 <div class="container-fluid p-5">
     <div class="row row-cols-1 row-cols-md-3 g-4" id="ads-container">
+
 
     </div>
 </div>
