@@ -16,31 +16,33 @@
 
         // Event listener for search button click
         searchButton.addEventListener('click', async function (event) {
-            await generateAds();
+            await generateApprovedAds(searchInput.value);
         })
 
         // Event listener for pressing Enter in search input
         searchInput.addEventListener('keypress', async function (event) {
             if (event.key === 'Enter') {
-                await generateAds();
+                await generateApprovedAds(searchInput.value);
             }
         });
     });
 
     /**
-     * Fetches and displays approved ads.
+     * Fetches ads from the server based on a search string, if provided.
+     * @param {string} string - The search string to filter ads (optional).
      */
-    const generateApprovedAds = async function() {
+    const generateApprovedAds = async function(string) {
         try {
+            const searchString = string ? `/${encodeURIComponent(string.trim())}` : '';
             spinner.classList.remove('d-none');
-            const ads = await fetchData("/api/approvedAds");
+            const ads = await fetchData(`/api/approvedAds${searchString}`);
             updateAdsContainer(ads);
         } catch (error) {
             console.log('Error message:', error);
         } finally {
             spinner.classList.add('d-none');
         }
-    };
+    }
 
     /**
      * Updates the ads container with the provided ads.
@@ -74,14 +76,6 @@
         `;
     }
 
-    /**
-     * Fetches ads based on search input and updates the ads container.
-     */
-    const generateAds = async function () {
-        adsContainer.innerText = '';
-        const ads = await fetchData(`/api/approvedAds/${encodeURIComponent(searchInput.value.trim())}`);
-        ads.forEach(ad => adsContainer.appendChild(createCustomCard(ad)));
-    }
 
     /**
      * Fetches data from the specified URL.
