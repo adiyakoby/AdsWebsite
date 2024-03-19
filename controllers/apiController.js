@@ -69,7 +69,6 @@ module.exports = {
                 console.log(errors)
                 return res.render('newAd', {
                     errors: errors,
-                    info: {loggedIn: req.session.loggedIn || false ,username: '', password: ''},
                     formData: {title: title, description: description, price: price, email: email, phone: phone}
                 })
             } else {

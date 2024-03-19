@@ -1,6 +1,5 @@
 let express = require('express');
 let router = express.Router();
-const db = require('../models');
 const apiController = require("../controllers/apiController");
 
 router.get('/allAds', apiController.getAllAds); // get all ads

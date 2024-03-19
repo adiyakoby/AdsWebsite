@@ -11,12 +11,12 @@
                 <form action="/users/login" method="post">
                     <div class="mb-3">
                         <label for="userName" class="form-label">Username:</label>
-                        <input type="text" class="form-control <%= username === '' ? '' : 'is-invalid' %>" id="userName" placeholder="Enter username" name="userName" value="<%= locals.username %>" required>
+                        <input type="text" class="form-control <%= username === '' ? '' : 'is-invalid' %>" id="userName" placeholder="Enter username" name="username" value="<%= username %>" required>
                     </div>
 
                     <div class="mb-3">
                         <label for="password" class="form-label">Password:</label>
-                        <input type="password" class="form-control <%= password === '' ? '' : 'is-invalid' %>" id="password" placeholder="Enter password" name="password" value="<%= locals.password %>" required>
+                        <input type="password" class="form-control <%= password === '' ? '' : 'is-invalid' %>" id="password" placeholder="Enter password" name="password" value="<%= password %>" required>
                         <div class="invalid-feedback text-center mb-3">
                             <%= username === '' ? '' : 'Username or password is incorrect.' %>
                         </div>

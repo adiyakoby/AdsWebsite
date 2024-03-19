@@ -3,8 +3,8 @@ const db = require("../models");
 
 const sessionMiddleware = (req, res, next) => {
     res.locals.loggedIn = req.session.loggedIn || false;
-    res.locals.username = req.session.username || '';
-    res.locals.password = req.session.password || '';
+    res.locals.username = req.body.username || '';
+    res.locals.password = req.body.password || '';
     next();
 };
 

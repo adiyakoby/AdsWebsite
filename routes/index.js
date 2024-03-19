@@ -11,7 +11,7 @@ router.get('/success', indexController.getSuccessPage);
 router.get('/newAd', indexController.getNewAdPage);
 
 router.get('/logout', function (req, res) {
-  req.session.loggedIn = false;
+  req.session.loggedIn =  res.locals.loggedIn = false;
   res.render('homePage');
 
 });
