@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+    // DOM elements
     const titleElement = document.getElementById("title");
     const descriptionElement = document.getElementById("description");
     const priceElement = document.getElementById("price");
@@ -8,6 +9,9 @@
     const phoneElement = document.getElementById("phone");
 
 
+    /**
+     * Event listener to ensure DOM content is fully loaded
+     */
     document.addEventListener('DOMContentLoaded',  function () {
 
         titleElement.addEventListener('change', validateTitle);
@@ -19,6 +23,9 @@
     }); // end of DOMContentLoaded listener
 
 
+    /**
+     * Validates the title input field.
+     */
     function validateTitle() {
         const titleValue = titleElement.value.trim();
         const titleLength = titleValue.length;
@@ -31,6 +38,9 @@
         }
     }
 
+    /**
+     * Validates the description input field.
+     */
     function validateDescription() {
         const descriptionValue = descriptionElement.value.trim();
         const descriptionLength = descriptionValue.length;
@@ -43,6 +53,9 @@
         }
     }
 
+    /**
+     * Validates the price input field.
+     */
     function validatePrice() {
         const priceValue = parseFloat(priceElement.value);
 
@@ -54,6 +67,9 @@
         }
     }
 
+    /**
+     * Validates the email input field.
+     */
     function validateEmail() {
         const emailValue = emailElement.value.trim();
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -66,6 +82,9 @@
         }
     }
 
+    /**
+     * Validates the phone number input field.
+     */
     function validatePhone() {
         const phoneValue = phoneElement.value.trim();
         const phonePattern = /^(\d{2,3}-\d{7})?$/;
@@ -78,6 +97,10 @@
         }
     }
 
+    /**
+     * Resets error messages for the given input element.
+     * @param {Element} element - The input element to reset errors for
+     */
     function resetError(element) {
         element.classList.remove("is-invalid");
         element.nextElementSibling.textContent = '';

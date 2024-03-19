@@ -1,30 +1,34 @@
 'use strict';
 
 (function () {
+    // DOM elements
     const adsContainer = document.getElementById("ads-container");
     const spinner = document.getElementById("spinner-loader");
     const approvedAdsBtn = document.getElementById("approved-ads");
     const pendingAdsBtn = document.getElementById("pending-ads");
     const toastLive = document.getElementById('liveToast')
 
-    //messages
+    // Messages
     const adApprovedMessage = "Ad was approved successfully.";
     const adDeletedMessage = "Ad was deleted successfully.";
     const adErrorMessage = "Something went wrong, please try again."
 
+
+    /**
+     * Event listener to ensure DOM content is fully loaded
+     */
     document.addEventListener('DOMContentLoaded', async function () {
 
         await fetchAds('pending');
 
+        // Event listeners for switching between pending and approved ads
         approvedAdsBtn.addEventListener('click', async function () {
-
             pendingAdsBtn.classList = 'btn btn-secondary btn-lg col-4';
             approvedAdsBtn.classList = 'btn btn-primary btn-lg col-4';
             await fetchAds('approved');
         });
 
         pendingAdsBtn.addEventListener('click',async function () {
-
             approvedAdsBtn.classList = 'btn btn-secondary btn-lg col-4';
             pendingAdsBtn.classList = 'btn btn-primary btn-lg col-4';
             await fetchAds('pending');
@@ -34,6 +38,10 @@
     });
 
 
+    /**
+     * Fetches ads based on their type (pending or approved) from the server.
+     * @param {string} adsType - The type of ads to fetch (pending or approved).
+     */
     async function fetchAds(adsType) {
 
         spinner.classList.remove('d-none');
@@ -47,6 +55,12 @@
         }
     }
 
+    /**
+     * Fetches data from the server using the specified URL and method.
+     * @param {string} url - The URL to fetch data from.
+     * @param {string} [method=GET] - The HTTP method to use for the request (default is GET).
+     * @returns {Promise<Response>} - The response from the server.
+     */
     const fetchData = async function (url, method) {
         try {
             const response = await fetch(url, { method: method || "GET" });
@@ -58,6 +72,11 @@
             throw err;
         }
     }
+
+    /**
+     * Retrieves ads of a specific type (pending or approved) from the server and updates the UI.
+     * @param {string} adType - The type of ads to retrieve (pending or approved).
+     */
     const getAds = async function (adType) {
         const res = await fetchData(`/${adType}Ads`);
         const ads = await res.json();
@@ -72,6 +91,11 @@
 
     }
 
+    /**
+     * Generates HTML template for displaying a message when no ads are available.
+     * @param {string} adType - The type of ads for which the message is generated.
+     * @returns {string} - The HTML template for the message.
+     */
     function generateNoAdsTemplate(adType) {
         return `
         <div class="container mt-5">
@@ -90,6 +114,12 @@
     `;
     }
 
+    /**
+     * Creates a custom card element to display an ad with options to approve or delete.
+     * @param {Object} ad - The ad object containing information like title, description, etc.
+     * @param {string} adType - The type of ad (pending or approved).
+     * @returns {HTMLElement} - The custom card element representing the ad.
+     */
     const createCustomCard = function (ad, adType) {
 
         const colDiv = document.createElement('div');
@@ -153,6 +183,12 @@
         return colDiv;
     }
 
+    /**
+     * Creates a list item for displaying ad details.
+     * @param {string} label - The label for the ad detail.
+     * @param {string} value - The value of the ad detail.
+     * @returns {HTMLElement} - The list item element.
+     */
     const createListItem = function (label, value) {
         const listItem = document.createElement('li');
         listItem.classList.add('list-group-item', 'border-0', 'py-1');
@@ -160,6 +196,14 @@
         return listItem;
     }
 
+    /**
+     * Creates a button element with specified text, class, and event listener.
+     * @param {string} text - The text content of the button.
+     * @param {string} className - The class name(s) to apply to the button.
+     * @param {string} dataId - The ID or data attribute value for the button.
+     * @param {Function} eventListener - The event listener function for the button click event.
+     * @returns {HTMLElement} - The button element.
+     */
     const createButton = function (text, className, dataId, eventListener) {
         const button = document.createElement('button');
         button.classList.add('btn', className, 'me-2', 'col-3', 'fs-5');
@@ -169,6 +213,11 @@
         return button;
     }
 
+
+    /**
+     * Handles the approval of an ad.
+     * @param {Event} btn - The click event object of the button clicked.
+     */
     const approveAd = async function (btn) {
         const res = await fetchData(`/ads/${btn.srcElement.dataset.adId}`, "PUT");
         if(res.ok) {
@@ -178,10 +227,12 @@
             showToast("", adErrorMessage);
         }
 
-
-
     }
 
+    /**
+     * Handles the deletion of an ad.
+     * @param {Event} btn - The click event object of the button clicked.
+     */
     const deleteAd = async function (btn) {
         const res = await fetchData(`/ads/${btn.srcElement.dataset.adId}`, "DELETE");
         if(res.ok) {

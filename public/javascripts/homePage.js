@@ -1,19 +1,25 @@
 'use strict';
 
 (function () {
+    // DOM elements
     const adsContainer = document.getElementById("ads-container");
     const spinner = document.getElementById("spinner-loader");
     const searchButton = document.getElementById("search");
     const searchInput = document.getElementById("search-input");
 
 
+    /**
+     * Event listener to ensure DOM content is fully loaded
+     */
     document.addEventListener('DOMContentLoaded', async function () {
-        await generateApprovedAds();
+        await generateApprovedAds(); // Load approved ads when DOM is loaded
 
+        // Event listener for search button click
         searchButton.addEventListener('click', async function (event) {
             await generateAds();
         })
 
+        // Event listener for pressing Enter in search input
         searchInput.addEventListener('keypress', async function (event) {
             if (event.key === 'Enter') {
                 await generateAds();
@@ -21,6 +27,9 @@
         });
     });
 
+    /**
+     * Fetches and displays approved ads.
+     */
     const generateApprovedAds = async function() {
         try {
             spinner.classList.remove('d-none');
@@ -33,6 +42,10 @@
         }
     };
 
+    /**
+     * Updates the ads container with the provided ads.
+     * @param {Array} ads - An array of ad objects
+     */
     const updateAdsContainer = function(ads) {
         if (ads.length !== 0) {
             adsContainer.innerHTML = '';
@@ -42,6 +55,10 @@
         }
     };
 
+    /**
+     * Generates HTML template for displaying no ads message.
+     * @returns {string} - HTML string for no ads message
+     */
     function generateNoAdsTemplate() {
         return `
             <div class="container mt-5">
@@ -57,13 +74,20 @@
         `;
     }
 
-
+    /**
+     * Fetches ads based on search input and updates the ads container.
+     */
     const generateAds = async function () {
         adsContainer.innerText = '';
         const ads = await fetchData(`/approvedAds/${encodeURIComponent(searchInput.value.trim())}`);
         ads.forEach(ad => adsContainer.appendChild(createCustomCard(ad)));
     }
 
+    /**
+     * Fetches data from the specified URL.
+     * @param {string} url - The URL to fetch data from
+     * @returns {Promise} - A promise that resolves to the fetched data
+     */
     const fetchData = async function (url) {
         try {
             spinner.classList.remove('d-none');
@@ -80,6 +104,12 @@
             spinner.classList.add('d-none');
         }
     }
+
+    /**
+     * Creates a custom card element for displaying ad details.
+     * @param {Object} ad - An ad object containing ad details
+     * @returns {Element} - The custom card element
+     */
     const createCustomCard = function (ad) {
 
         const colDiv = document.createElement('div');
@@ -128,6 +158,12 @@
         return colDiv;
     }
 
+    /**
+     * Creates a list item element with label and value.
+     * @param {string} label - The label for the list item
+     * @param {string} value - The value for the list item
+     * @returns {Element} - The list item element
+     */
     const createListItem = function (label, value) {
         const listItem = document.createElement('li');
         listItem.classList.add('list-group-item', 'border-0', 'py-1');

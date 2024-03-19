@@ -5,15 +5,15 @@ let router = express.Router();
 const apiController = require("../controllers/adsController");
 const isAdmin = require('../middlewares/authentication');
 
-router.get('/approvedAds', apiController.getApprovedAds); // get approved ads
-router.get('/approvedAds/:string', apiController.searchForAds); // get selected ads
-router.post('/postAd', apiController.postAd);  // post new ad by sending the form.
+router.get('/approvedAds', apiController.getApprovedAds); // Route to get approved ads
+router.get('/approvedAds/:string', apiController.searchForAds); // Route to search for specific ads
+router.post('/postAd', apiController.postAd);  // Route to post a new ad
 
 // Admin routes
-router.get('/allAds', isAdmin ,apiController.getAllAds); // get all ads
-router.get('/pendingAds', isAdmin ,apiController.getPendingAds);
-router.put('/ads/:id', isAdmin, apiController.approveAd);
-router.delete('/ads/:id', isAdmin, apiController.deleteAd);
+router.get('/allAds', isAdmin, apiController.getAllAds); // Route to get all ads (admin only)
+router.get('/pendingAds', isAdmin, apiController.getPendingAds); // Route to get pending ads (admin only)
+router.put('/ads/:id', isAdmin, apiController.approveAd); // Route to approve an ad (admin only)
+router.delete('/ads/:id', isAdmin, apiController.deleteAd); // Route to delete an ad (admin only)
 
 
 module.exports = router;

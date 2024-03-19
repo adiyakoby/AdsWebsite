@@ -7,11 +7,11 @@ const isAdmin = require('../middlewares/authentication');
 
 
 
-/* GET home page. */
-router.get('/', indexController.getHomePage);
-router.get('/newAd', indexController.getNewAdPage);
-router.get('/login', indexController.getLoginPage);
-router.get('/adminPage', isAdmin, indexController.getAdminPage);
-router.get('/success', indexController.getSuccessPage);
+router.get('/', indexController.getHomePage); // Route for rendering home page
+router.get('/newAd', indexController.getNewAdPage); // Route for rendering new ad page
+router.get('/login', indexController.getLoginPage); // Route for rendering login page
+router.get('/adminPage', isAdmin, indexController.getAdminPage); // Route for rendering admin page, with authentication middleware
+router.get('/success', indexController.getSuccessPage); // Route for rendering success page
+router.get('*', indexController.getHomePage); //catch all routes to home page
 
 module.exports = router;

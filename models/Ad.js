@@ -2,13 +2,20 @@
 
 const { DataTypes, Model } = require('sequelize');
 
+/**
+ * Represents an advertisement posted by a user.
+ * @param {import('sequelize').Sequelize} sequelize - The Sequelize instance.
+ * @returns {import('sequelize').Model} - The Ad model.
+ */
 module.exports = (sequelize) => {
     class Ad extends Model {
 
     }
 
+    // Define the Ad model's attributes
     Ad.init({
 
+        // Title of the advertisement
         title: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -23,6 +30,8 @@ module.exports = (sequelize) => {
                     }
             }
         },
+
+        // Description of the advertisement
         description: {
             type: DataTypes.STRING,
             allowNull: true,
@@ -33,6 +42,8 @@ module.exports = (sequelize) => {
                     }
             }
         },
+
+        // Price of the advertised item
         price: {
             type: DataTypes.INTEGER,
             allowNull: false,
@@ -51,6 +62,8 @@ module.exports = (sequelize) => {
                     }
             }
         },
+
+        // Phone number associated with the advertisement
         phone: {
             type: DataTypes.STRING,
             allowNull: true,
@@ -62,6 +75,8 @@ module.exports = (sequelize) => {
             }
 
         },
+
+        // Email of the advertiser
         email: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -76,6 +91,8 @@ module.exports = (sequelize) => {
                 }
             }
         },
+
+        // Indicates whether the advertisement is approved by the admin
         isApproved: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
