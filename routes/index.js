@@ -1,22 +1,14 @@
 let express = require('express');
 let router = express.Router();
-const apiController = require("../controllers/apiController");
+const indexController = require("../controllers/indexController");
 
 
 /* GET home page. */
-router.get('/', async function (req, res) {
-  res.render('homePage', { info: {loggedIn: req.session.loggedIn || false ,username: '', password: ''} });
-});
+router.get('/', indexController.getHomePage);
 
+router.get('/success', indexController.getSuccessPage);
 
-
-router.get('/success', function(req, res) {
-  res.render('success',{ info: {loggedIn: req.session.loggedIn || false ,username: '', password: ''}});
-});
-
-router.get('/newAd', function(req, res) {
-  res.render('newAd', {errors: {} ,info: {loggedIn: req.session.loggedIn || false ,username: '', password: ''}, formData: {} });
-});
+router.get('/newAd', indexController.getNewAdPage);
 
 router.get('/logout', function (req, res) {
   req.session.loggedIn = false;
@@ -24,8 +16,6 @@ router.get('/logout', function (req, res) {
 
 });
 
-router.get('/login', function(req, res) {
-  res.render('login', { info: {loggedIn: req.session.loggedIn || false ,username: '', password: ''}});
-});
+router.get('/login', indexController.getLoginPage);
 
 module.exports = router;
