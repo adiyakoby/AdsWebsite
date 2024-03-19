@@ -1,4 +1,5 @@
 'use strict';
+
 const {getLastAd} = require('./adsController')
 
 module.exports = {

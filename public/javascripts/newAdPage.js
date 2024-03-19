@@ -1,6 +1,5 @@
 'use strict';
 
-
 (function () {
     const titleElement = document.getElementById("title");
     const descriptionElement = document.getElementById("description");

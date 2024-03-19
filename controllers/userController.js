@@ -1,4 +1,5 @@
 'use strict';
+
 const db = require("../models");
 
 const validateUserAccess = async function  (name, pass) {

@@ -1,5 +1,4 @@
 'use strict';
-const db = require("../models");
 
 const sessionMiddleware = (req, res, next) => {
     res.locals.loggedIn = req.session.loggedIn || false;
