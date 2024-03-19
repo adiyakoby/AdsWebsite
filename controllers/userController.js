@@ -28,5 +28,10 @@ module.exports = {
 
     },
 
+    logOut(req, res) {
+        req.session.loggedIn =  res.locals.loggedIn = false;
+        res.redirect('/');
+    }
+
 };
 
