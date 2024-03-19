@@ -67,41 +67,27 @@
             ads.forEach(ad => adsContainer.appendChild(createCustomCard(ad, adType)));
         }
         else {
-            adsContainer.innerHTML = "<div class=\"container mt-5\">\n" +
-                "  <div class=\"row\">\n" +
-                "    <div class=\"col-lg-6 mx-auto\">\n" +
-                "      <div class=\"card rounded shadow-lg\">\n" +
-                "        <div class=\"card-body\">\n" +
-                "          <h2 class=\"card-title text-primary mb-4\">No Ads Available</h2>\n" +
-                `          <p class=\"card-text text-muted\">Oops! It seems there are no ${adType} ads to display at the moment.</p>\n` +
-                "          <p class=\"card-text text-muted\">Don't worry, new ads are added all the time. Please check back later for updates.</p>\n" +
-                "        </div>\n" +
-                "      </div>\n" +
-                "    </div>\n" +
-                "  </div>\n" +
-                "</div>\n";
+            adsContainer.innerHTML = generateNoAdsTemplate(adType);
         }
 
-        // else
-        //     adsContainer.innerHTML = "<p> No ads to show </p>";
-    }
-    const getPendingAds = async function () {
-        const res = await fetchData("/api/pendingAds");
-        const ads = await res.json();
-        adsContainer.innerHTML = '';
-        if(ads.length > 0)
-            ads.forEach(ad => adsContainer.appendChild(createCustomCard(ad)));
-        // else
-        //     adsContainer.innerHTML = "<p> No ads to show </p>";
     }
 
-    const getApprovedAds = async function () {
-        const ads = await fetchData("/api/approvedAds");
-        adsContainer.innerHTML = '';
-        if(ads.length > 0)
-            ads.forEach(ad => adsContainer.appendChild(createCustomCard(ad)));
-        else
-            adsContainer.innerHTML = "<p> No ads to show </p>";
+    function generateNoAdsTemplate(adType) {
+        return `
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-lg-6 mx-auto">
+                    <div class="card rounded shadow-lg">
+                        <div class="card-body">
+                            <h2 class="card-title text-primary mb-4">No Ads Available</h2>
+                            <p class="card-text text-muted">Oops! It seems there are no ${adType} ads to display at the moment.</p>
+                            <p class="card-text text-muted">Don't worry, new ads are added all the time. Please check back later for updates.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
     }
 
     const createCustomCard = function (ad, adType) {
