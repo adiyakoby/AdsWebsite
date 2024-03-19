@@ -59,7 +59,7 @@
         }
     }
     const getAds = async function (adType) {
-        const res = await fetchData(`/api/${adType}Ads`);
+        const res = await fetchData(`/${adType}Ads`);
         const ads = await res.json();
 
         if(ads.length !== 0) {
@@ -170,7 +170,7 @@
     }
 
     const approveAd = async function (btn) {
-        const res = await fetchData(`/api/ads/${btn.srcElement.dataset.adId}`, "PUT");
+        const res = await fetchData(`/ads/${btn.srcElement.dataset.adId}`, "PUT");
         if(res.ok) {
             await fetchAds('pending');
             showToast("approved", adApprovedMessage)
@@ -183,7 +183,7 @@
     }
 
     const deleteAd = async function (btn) {
-        const res = await fetchData(`/api/ads/${btn.srcElement.dataset.adId}`, "DELETE");
+        const res = await fetchData(`/ads/${btn.srcElement.dataset.adId}`, "DELETE");
         if(res.ok) {
             const adType = pendingAdsBtn.classList.contains('btn-primary') ? 'pending' : 'approved';
             await fetchAds(adType);

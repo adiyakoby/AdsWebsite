@@ -24,38 +24,43 @@
     const generateApprovedAds = async function() {
         try {
             spinner.classList.remove('d-none');
-            const ads = await fetchData("/api/approvedAds");
-            spinner.classList.add('d-none');
-            if(ads.length !== 0) {
-                adsContainer.innerText = '';
-                ads.forEach(ad => adsContainer.appendChild(createCustomCard(ad)));
-            }
-            else {
-                adsContainer.innerHTML = "<div class=\"container mt-5\">\n" +
-                    "      <div class=\"row\">\n" +
-                    "        <div class=\"col-lg-6 mx-auto\">\n" +
-                    "          <div class=\"d-flex justify-content-center align-items-center flex-column\">\n" +
-                    "            <h2 class=\"text-center mb-4\">No ads available at the moment</h2>\n" +
-                    "            <p class=\"text-center\">We're sorry, but it seems there are no ads available right now. Please check back later or consider posting your own ad!</p>\n" +
-                    "          </div>\n" +
-                    "        </div>\n" +
-                    "      </div>\n" +
-                    "    </div>";
-            }
-
+            const ads = await fetchData("/approvedAds");
+            updateAdsContainer(ads);
         } catch (error) {
-            console.log('Error message:', err);
+            console.log('Error message:', error);
         } finally {
             spinner.classList.add('d-none');
         }
+    };
 
+    const updateAdsContainer = function(ads) {
+        if (ads.length !== 0) {
+            adsContainer.innerHTML = '';
+            ads.forEach(ad => adsContainer.appendChild(createCustomCard(ad)));
+        } else {
+            adsContainer.innerHTML = generateNoAdsTemplate();
+        }
+    };
 
-
+    function generateNoAdsTemplate() {
+        return `
+            <div class="container mt-5">
+                <div class="row">
+                    <div class="col-lg-6 mx-auto">
+                        <div class="d-flex justify-content-center align-items-center flex-column">
+                            <h2 class="text-center mb-4">No ads available at the moment</h2>
+                            <p class="text-center">We're sorry, but it seems there are no ads available right now. Please check back later or consider posting your own ad!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
     }
+
 
     const generateAds = async function () {
         adsContainer.innerText = '';
-        const ads = await fetchData(`/api/approvedAds/${encodeURIComponent(searchInput.value.trim())}`);
+        const ads = await fetchData(`/approvedAds/${encodeURIComponent(searchInput.value.trim())}`);
         ads.forEach(ad => adsContainer.appendChild(createCustomCard(ad)));
     }
 
