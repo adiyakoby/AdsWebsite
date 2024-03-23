@@ -8,7 +8,7 @@
         <div class="col-md-6">
             <div class="card shadow-lg p-4">
                 <h2 class="text-center mb-4">Sign Up</h2>
-                <form action="/users/register" method="post">
+                <form action="/users/signup" method="post">
                     <div class="mb-3">
                         <label for="userName" class="form-label">Username:</label>
                         <input type="text" class="form-control <%= username === '' ? '' : 'is-invalid' %>" id="userName" placeholder="Enter username" name="username" value="<%= username %>" required>
