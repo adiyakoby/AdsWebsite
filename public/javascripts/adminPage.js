@@ -9,8 +9,6 @@
     const toastLive = document.getElementById('liveToast')
 
     // Messages
-    const adApprovedMessage = "Ad was approved successfully.";
-    const adDeletedMessage = "Ad was deleted successfully.";
     const adErrorMessage = "Something went wrong, please try again."
 
 
@@ -66,7 +64,6 @@
                 throw new Error(response.statusText);
             return response;
         } catch (err) {
-            console.log('Error message:', err);
             throw err;
         }
     }
@@ -216,14 +213,14 @@
      * @param {Event} btn - The click event object of the button clicked.
      */
     const approveAd = async function (btn) {
-        const res = await fetchData(`/api/ads/${btn.srcElement.dataset.adId}`, "PUT");
-        if(res.ok) {
+        try {
+            const res = await fetchData(`/api/ads/${btn.srcElement.dataset.adId}`, "PUT");
+            showToast("approved", await res.text())
+        } catch (e) {
+            showToast(adErrorMessage, e.message);
+        } finally {
             await fetchAds('pending');
-            showToast("approved", adApprovedMessage)
-        } else {
-            showToast("", adErrorMessage);
         }
-
     }
 
     /**
@@ -231,17 +228,17 @@
      * @param {Event} btn - The click event object of the button clicked.
      */
     const deleteAd = async function (btn) {
-        const res = await fetchData(`/api/ads/${btn.srcElement.dataset.adId}`, "DELETE");
-        if(res.ok) {
+        try {
+            const res = await fetchData(`/api/ads/${btn.srcElement.dataset.adId}`, "DELETE");
+            showToast("deleted", await res.text())
+        } catch (e) {
+            showToast(adErrorMessage, e.message);
+        } finally {
             const adType = pendingAdsBtn.classList.contains('btn-primary') ? 'pending' : 'approved';
             await fetchAds(adType);
-            showToast("deleted", adDeletedMessage)
-        } else {
-            showToast("", adErrorMessage);
         }
-
-
     }
+
     /**
      * Creates a toast notification body.
      * @param {string} header - The header text for the toast notification.
