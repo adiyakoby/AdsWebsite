@@ -159,7 +159,7 @@ module.exports = {
     async deleteAd(req, res) {
         try {
             const ad = await db.Ad.findByPk(req.params.id);
-            if(ad) {
+            if(ad && (req.session.role === 'admin' || req.session.userId === ad.user_id)) {
                 ad.destroy();
                 return res.status(200).send(module.exports.messages.adDeleted);
             }
@@ -193,6 +193,27 @@ module.exports = {
             console.log(module.exports.messages.errorMessage, e.message);
             return null;
         }
+    },
+
+    /**
+     * Retrieves all ads belonging to the logged-in user.
+     * @param {Object} req - Express request object.
+     * @param {Object} res - Express response object.
+     */
+    async getUserAds(req, res) {
+        try {
+            const user = await db.User.findByPk(req.session.userId);
+            if(!user){
+                return res.status(404).send('User not found');
+            }
+
+            const ads = await user.getAds();
+            return res.status(200).json(ads);
+        } catch (error) {
+            console.error("Error retrieving user ads:", error);
+            return res.status(500).send("Internal server error");
+        }
     }
+
 
 };
