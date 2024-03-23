@@ -3,10 +3,6 @@
 const db = require("../models");
 const { Sequelize } = require("sequelize");
 
-
-
-
-
 module.exports = {
 
     // Messages
@@ -40,16 +36,23 @@ module.exports = {
      */
     async getApprovedAds(req, res) {
         try {
-            await db.Ad.findAll({ where:{isApproved: true}, order: [['createdAt', 'DESC']]})
-                .then((ads) => res.status(200).send(ads))
-                .catch((err) => {
-                    console.log('There was an error querying contacts', JSON.stringify(err))
-                    err.error = 1; // some error code for client side
-                    return res.status(400).send(err) // send the error to the client
-                });
-        }catch (err) {
-            console.log('There was an error querying contacts', JSON.stringify(err))
+            const ads = await db.Ad.findAll({ where:{isApproved: true}, order: [['createdAt', 'DESC']]})
+            return res.status(200).send(ads);
+        } catch (e) {
+            console.log(module.exports.messages.serverError);
+            res.status(500).send(module.exports.messages.serverError)
         }
+        // try {
+        //     await db.Ad.findAll({ where:{isApproved: true}, order: [['createdAt', 'DESC']]})
+        //         .then((ads) => res.status(200).send(ads))
+        //         .catch((err) => {
+        //             console.log('There was an error querying contacts', JSON.stringify(err))
+        //             err.error = 1; // some error code for client side
+        //             return res.status(400).send(err) // send the error to the client
+        //         });
+        // }catch (err) {
+        //     console.log('There was an error querying contacts', JSON.stringify(err))
+        // }
     },
 
     /**
@@ -59,16 +62,23 @@ module.exports = {
      */
     async getAllAds(req, res) {
         try {
-            await db.Ad.findAll({ order: [['createdAt', 'DESC']]})
-                .then((ads) => res.status(200).send(ads))
-                .catch((err) => {
-                    console.log('There was an error querying contacts', JSON.stringify(err))
-                    err.error = 1; // some error code for client side
-                    return res.status(400).send(err) // send the error to the client
-                });
-        }catch (err) {
-            console.log('There was an error querying contacts', JSON.stringify(err))
+            const ads =  await db.Ad.findAll({ order: [['createdAt', 'DESC']]});
+            return res.status(200).send(ads);
+        } catch (e) {
+            console.log(module.exports.messages.serverError);
+            res.status(500).send(module.exports.messages.serverError)
         }
+        // try {
+        //     await db.Ad.findAll({ order: [['createdAt', 'DESC']]})
+        //         .then((ads) => res.status(200).send(ads))
+        //         .catch((err) => {
+        //             console.log('There was an error querying contacts', JSON.stringify(err))
+        //             err.error = 1; // some error code for client side
+        //             return res.status(400).send(err) // send the error to the client
+        //         });
+        // }catch (err) {
+        //     console.log('There was an error querying contacts', JSON.stringify(err))
+        // }
     },
 
     /**
@@ -78,16 +88,23 @@ module.exports = {
      */
     async getPendingAds(req, res) {
         try {
-            await db.Ad.findAll({ where: {isApproved: false},order: [['createdAt', 'DESC']]})
-                .then((ads) => res.status(200).send(ads))
-                .catch((err) => {
-                    console.log('There was an error querying contacts', JSON.stringify(err))
-                    err.error = 1; // some error code for client side
-                    return res.status(400).send(err) // send the error to the client
-                });
-        }catch (err) {
-            console.log('There was an error querying contacts', JSON.stringify(err))
+            const ads = await db.Ad.findAll({ where: {isApproved: false},order: [['createdAt', 'DESC']]});
+            return res.status(200).send(ads);
+        } catch (e) {
+            console.log(module.exports.messages.serverError);
+            res.status(500).send(module.exports.messages.serverError)
         }
+        // try {
+        //     await db.Ad.findAll({ where: {isApproved: false},order: [['createdAt', 'DESC']]})
+        //         .then((ads) => res.status(200).send(ads))
+        //         .catch((err) => {
+        //             console.log('There was an error querying contacts', JSON.stringify(err))
+        //             err.error = 1; // some error code for client side
+        //             return res.status(400).send(err) // send the error to the client
+        //         });
+        // }catch (err) {
+        //     console.log('There was an error querying contacts', JSON.stringify(err))
+        // }
     },
 
     /**
