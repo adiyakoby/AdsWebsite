@@ -8,6 +8,12 @@
     const emailElement = document.getElementById("email");
     const phoneElement = document.getElementById("phone");
 
+    // Error messages
+    const titleErrorMessage = 'Title cannot be empty and must exceed 20 characters.';
+    const descriptionErrorMessage = 'Description must not exceed 200 characters.';
+    const priceErrorMessage = 'Price must be a valid number greater than 0.';
+    const emailErrorMessage = 'Email must be in a valid format.';
+    const phoneErrorMessage = 'Phone number must be in the format XXX-XXXXXXX or XX-XXXXXXX.';
 
     /**
      * Event listener to ensure DOM content is fully loaded
@@ -31,7 +37,7 @@
         const titleLength = titleValue.length;
 
         if (titleLength === 0 || titleLength > 20) {
-            showError(titleElement, 'Title cannot be empty and must exceed 20 characters.');
+            showError(titleElement, titleErrorMessage);
         } else {
             resetError(titleElement);
         }
@@ -45,7 +51,7 @@
         const descriptionLength = descriptionValue.length;
 
         if (descriptionLength > 200) {
-            showError(descriptionElement, 'Description must not exceed 200 characters.');
+            showError(descriptionElement, descriptionErrorMessage);
         } else {
             resetError(descriptionElement);
         }
@@ -58,7 +64,7 @@
         const priceValue = parseFloat(priceElement.value);
 
         if (isNaN(priceValue) || priceValue <= 0) {
-            showError(priceElement, 'Price must be a valid number greater than 0.');
+            showError(priceElement, priceErrorMessage);
         } else {
             resetError(priceElement);
         }
@@ -72,7 +78,7 @@
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         if (!emailPattern.test(emailValue)) {
-            showError(emailElement, 'Email must be in a valid format.');
+            showError(emailElement, emailErrorMessage);
         } else {
             resetError(emailElement);
         }
@@ -86,7 +92,7 @@
         const phonePattern = /^(\d{2,3}-\d{7})?$/;
 
         if (!phonePattern.test(phoneValue)) {
-            showError(phoneElement, 'Phone number must be in the format XXX-XXXXXXX or XX-XXXXXXX.');
+            showError(phoneElement, phoneErrorMessage);
         } else {
             resetError(phoneElement);
         }
