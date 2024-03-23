@@ -15,7 +15,7 @@ The Ad Management System is a web application designed to manage advertisements.
 - **Admin dashboard:** Administrators have access to an admin dashboard where they can view pending ads, approve or delete them.
 - **Search functionality:** Users can search for ads by title.
 - **Error handling:** The system provides informative error messages and a user-friendly error page in case of any issues.
-
+- **Last Ad Notification:** Users are provided with real-time updates regarding the status of their latest ad submission. Upon visiting the New Ad page, users receive a message indicating whether their last ad has been approved, is awaiting approval, or has been deleted. If the ad has been deleted, the message automatically disappears, ensuring users are not shown outdated information. This feature enhances user experience by keeping them informed about the status of their ads while maintaining relevance.
 ## Installation
 
 To run the Ad Management System locally, follow these steps:
