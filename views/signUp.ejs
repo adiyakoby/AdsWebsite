@@ -1,0 +1,42 @@
+<%- include('partials/header') %>
+<!-- rest of the page -->
+
+<%- include('partials/navigator') %> <!-- Nav bar -->
+
+<div class="container-fluid p-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg p-4">
+                <h2 class="text-center mb-4">Sign Up</h2>
+                <form action="/users/register" method="post">
+                    <div class="mb-3">
+                        <label for="userName" class="form-label">Username:</label>
+                        <input type="text" class="form-control <%= username === '' ? '' : 'is-invalid' %>" id="userName" placeholder="Enter username" name="username" value="<%= username %>" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email:</label>
+                        <input type="email" class="form-control <%= email === '' ? '' : 'is-invalid' %>" id="email" placeholder="Enter email" name="email" value="<%= email %>" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password:</label>
+                        <input type="password" class="form-control <%= password === '' ? '' : 'is-invalid' %>" id="password" placeholder="Enter password" name="password" value="<%= password %>" required>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Register button -->
+<div class="row justify-content-center mt-3">
+    <div class="col-md-6">
+        <p class="text-center mb-3">Already have an account? <a href="/login">Login</a>.</p>
+    </div>
+</div>
+
+
+<!-- end of the page -->
+<%- include('partials/footer') %>
