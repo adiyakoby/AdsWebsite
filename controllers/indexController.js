@@ -65,4 +65,14 @@ module.exports = {
         res.render('signUp');
     },
 
+    /**
+     * Renders the user page view.
+     * @param {Object} req - Express request object.
+     * @param {Object} res - Express response object.
+     */
+    getUserPage(req, res) {
+        res.render('userPage');
+    },
+
+
 };
