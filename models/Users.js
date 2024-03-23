@@ -13,6 +13,12 @@ module.exports = (sequelize) => {
 
     class User extends Model {
 
+        static associate(models) {
+            // define association here
+            User.hasMany(models.Ad, {
+                foreignKey: 'user_id',
+            });
+        }
         /**
          * Hashes the user's password
          */
@@ -44,7 +50,10 @@ module.exports = (sequelize) => {
         login: {
             type: DataTypes.STRING,
             allowNull: false,
-            unique: true,
+            unique: {
+                args: true,
+                msg: "login name is taken."
+            },
             validate: {
                 notEmpty: true,
                 len: [3,20]

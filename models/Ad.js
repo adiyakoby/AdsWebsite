@@ -9,7 +9,13 @@ const { DataTypes, Model } = require('sequelize');
  */
 module.exports = (sequelize) => {
     class Ad extends Model {
-
+        static associate(models) {
+            // define association here
+            Ad.belongsTo(models.User, {
+                foreignKey: 'user_id',
+                onDelete: 'CASCADE',
+            });
+        }
     }
 
     // Define the Ad model's attributes
