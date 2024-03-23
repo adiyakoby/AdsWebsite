@@ -10,7 +10,7 @@
  */
 const isAdmin = async (req, res, next) => {
     try {
-        if (!req.session.loggedIn) {
+        if (!req.session.loggedIn && req.session.role === "admin") {
             return res.status(401).render('login');
         }
         next(); // If logged in, proceed to the next middleware or route handler

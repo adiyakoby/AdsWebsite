@@ -51,5 +51,8 @@ module.exports = {
         res.redirect('/'); // Redirect to the home page
     }
 
+
+
+
 };
 

@@ -11,6 +11,7 @@
 const sessionMiddleware = (req, res, next) => {
     try {
         res.locals.loggedIn = req.session.loggedIn || false;
+        res.locals.role = req.session.role || "user";
         res.locals.username = req.body.username || '';
         res.locals.password = req.body.password || '';
         res.locals.email = req.body.email || '';
