@@ -21,24 +21,64 @@ let adsRouter = require('./routes/ads');
 const db = require('./models/index');
 // createt the tables if dont exist
 db.sequelize.sync()
-    .then(() => {
-      console.log('Database Synced.');
-      return Promise.all([
-          db.User.findOrCreate({
-            where: {login: 'admin'},
-            defaults: {login: 'admin', password: 'admin', role: "admin"}
-          }),
-        db.User.findOrCreate({
-          where: {login: 'admin2'},
-          defaults: {login: 'admin2', password: 'admin2', role: "admin"}
-        }),
-        db.Ad.findOrCreate({
-            where: {title: "Example1"},
-            defaults: {title: "Example1", description: "description example.", price: 100,
-            phone: "02-6517289", email: "example@example.com"},
-            isApproved: false
-        })
-      ]);
+    .then(async () => {
+        console.log('Database Synced.');
+        return await Promise.all([
+            await db.User.findOrCreate({
+                where: {login: 'admin'},
+                defaults: {login: 'admin', password: 'admin', role: "admin"}
+            }),
+            await db.User.findOrCreate({
+                where: {login: 'admin2'},
+                defaults: {login: 'admin2', password: 'admin2', role: "admin"}
+            }),
+            await db.User.findOrCreate({
+                where: {login: 'user'},
+                defaults: {login: 'user', password: 'user', role: "user"}
+            }),
+            await db.Ad.findOrCreate({
+                where: {title: "Example1"},
+                defaults: {
+                    title: "Example1", description: "description example.", price: 100,
+                    phone: "02-6517289", email: "example@example.com", isApproved: false,
+                    user_id: 3
+                }
+            }),
+            await db.Ad.findOrCreate({
+                where: {title: "Exampasdle2"},
+                defaults: {
+                    title: "Example1", description: "description example.", price: 100,
+                    phone: "02-6517289", email: "example@example.com", isApproved: false,
+                    user_id: 3
+                }
+            }),
+            await db.Ad.findOrCreate({
+                where: {title: "bbbbbbbbb"},
+                defaults: {
+                    title: "bbbbbbbbb", description: "description example.", price: 100,
+                    phone: "02-6517289", email: "example@example.com", isApproved: false,
+                    user_id: 3
+                }
+            }),
+            await db.Ad.findOrCreate({
+                where: {title: "aaaaa"},
+                defaults: {
+                    title: "aaaaa", description: "description example.", price: 100,
+                    phone: "02-6517289", email: "example@example.com", isApproved: false,
+                    user_id: 3
+                }
+            }),
+            await db.Ad.findOrCreate({
+                where: {title: "Easd"},
+                defaults: {
+                    title: "Easd", description: "description example.", price: 100,
+                    phone: "02-6517289", email: "example@example.com", isApproved: false,
+                    user_id: 3
+                }
+            }),
+
+
+        ]);
     }).then(() => {
         console.log('Admin user created.');
     }).catch((err) => {
