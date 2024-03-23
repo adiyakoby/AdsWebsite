@@ -36,7 +36,7 @@ module.exports = {
             }
         } catch (e) {
             console.log("Something went wrong.", e.message);
-            res.status(500).send('Internal Server Error');
+            res.status(500).render('error');
         }
 
     },
