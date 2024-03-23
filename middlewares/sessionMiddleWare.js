@@ -13,6 +13,7 @@ const sessionMiddleware = (req, res, next) => {
         res.locals.loggedIn = req.session.loggedIn || false;
         res.locals.username = req.body.username || '';
         res.locals.password = req.body.password || '';
+        res.locals.email = req.body.email || '';
         next(); // Proceed to the next middleware or route handler
     } catch (error) {
         next(error)
