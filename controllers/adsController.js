@@ -42,17 +42,7 @@ module.exports = {
             console.log(module.exports.messages.serverError);
             res.status(500).send(module.exports.messages.serverError)
         }
-        // try {
-        //     await db.Ad.findAll({ where:{isApproved: true}, order: [['createdAt', 'DESC']]})
-        //         .then((ads) => res.status(200).send(ads))
-        //         .catch((err) => {
-        //             console.log('There was an error querying contacts', JSON.stringify(err))
-        //             err.error = 1; // some error code for client side
-        //             return res.status(400).send(err) // send the error to the client
-        //         });
-        // }catch (err) {
-        //     console.log('There was an error querying contacts', JSON.stringify(err))
-        // }
+
     },
 
     /**
@@ -68,17 +58,7 @@ module.exports = {
             console.log(module.exports.messages.serverError);
             res.status(500).send(module.exports.messages.serverError)
         }
-        // try {
-        //     await db.Ad.findAll({ order: [['createdAt', 'DESC']]})
-        //         .then((ads) => res.status(200).send(ads))
-        //         .catch((err) => {
-        //             console.log('There was an error querying contacts', JSON.stringify(err))
-        //             err.error = 1; // some error code for client side
-        //             return res.status(400).send(err) // send the error to the client
-        //         });
-        // }catch (err) {
-        //     console.log('There was an error querying contacts', JSON.stringify(err))
-        // }
+
     },
 
     /**
@@ -94,17 +74,6 @@ module.exports = {
             console.log(module.exports.messages.serverError);
             res.status(500).send(module.exports.messages.serverError)
         }
-        // try {
-        //     await db.Ad.findAll({ where: {isApproved: false},order: [['createdAt', 'DESC']]})
-        //         .then((ads) => res.status(200).send(ads))
-        //         .catch((err) => {
-        //             console.log('There was an error querying contacts', JSON.stringify(err))
-        //             err.error = 1; // some error code for client side
-        //             return res.status(400).send(err) // send the error to the client
-        //         });
-        // }catch (err) {
-        //     console.log('There was an error querying contacts', JSON.stringify(err))
-        // }
     },
 
     /**
