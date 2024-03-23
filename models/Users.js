@@ -9,6 +9,8 @@ const saltRounds = 10;
  * @param {import('sequelize').Sequelize} sequelize - Sequelize instance
  */
 module.exports = (sequelize) => {
+
+
     class User extends Model {
 
         /**
@@ -55,7 +57,6 @@ module.exports = (sequelize) => {
             validate: {
                 len: [3, 20]
             }
-
         },
         role : {
             type: DataTypes.STRING,

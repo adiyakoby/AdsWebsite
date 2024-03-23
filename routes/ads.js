@@ -3,11 +3,12 @@
 let express = require('express');
 let router = express.Router();
 const apiController = require("../controllers/adsController");
-const isAdmin = require('../middlewares/authentication');
+const isAdmin = require('../middlewares/adminAuthentication');
+const isUser = require('../middlewares/userAuthentication');
 
 router.get('/approvedAds', apiController.getApprovedAds); // Route to get approved ads
 router.get('/approvedAds/:string', apiController.searchForAds); // Route to search for specific ads
-router.post('/postAd', apiController.postAd);  // Route to post a new ad
+router.post('/postAd', isUser ,apiController.postAd);  // Route to post a new ad
 
 // Admin routes
 router.get('/allAds', isAdmin, apiController.getAllAds); // Route to get all ads (admin only)

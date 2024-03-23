@@ -12,10 +12,7 @@ module.exports = {
      */
     async validateUserAccess (name, pass) {
         const user = await db.User.findOne({where: {login: name}});
-        if (user) {
-            return user.comparePassword(pass);
-        }
-        return false;
+        return user || null;
     },
 
     /**
@@ -26,17 +23,22 @@ module.exports = {
     async login(req, res) {
         try {
             const { username, password } = req.body;
-            const isValidUser = await module.exports.validateUserAccess(username, password);
-            if(isValidUser){
+            const user = await module.exports.validateUserAccess(username, password);
+
+            if(user){
                 req.session.loggedIn = true;
-                res.redirect('/adminPage');
+                req.session.role = user.role;
+                if(user.role === 'admin')
+                    return res.redirect('/adminPage');
+                else
+                    return res.redirect('/userPage');
             }
             else {
-                res.render('login'); // If user is not valid, render the login page again
+                return res.status(401).render('login'); // If user is not valid, render the login page again
             }
         } catch (e) {
             console.log("Something went wrong.", e.message);
-            res.status(500).render('error');
+            return res.status(500).render('error');
         }
 
     },
@@ -49,9 +51,30 @@ module.exports = {
     logOut(req, res) {
         req.session.loggedIn =  res.locals.loggedIn = false;  // Clear loggedIn flag in session and response locals
         res.redirect('/'); // Redirect to the home page
+    },
+
+    /**
+     * Handles user registration.
+     * @param {Object} req - Express request object.
+     * @param {Object} res - Express response object.
+     */
+    async signup(req, res) {
+        try {
+            const { username, email, password } = req.body;
+
+            const user = await db.User.create({
+                login: username,
+                password: password
+            });
+            if(user)
+                req.session.loggedIn = true;
+
+            res.redirect('/');
+        } catch (e) {
+            console.log("Something went wrong during registration.", e.message);
+            res.status(500).render('error');
+        }
     }
-
-
 
 
 };
