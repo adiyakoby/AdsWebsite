@@ -56,4 +56,13 @@ module.exports = {
       res.render('adminPage');
     },
 
+    /**
+     * Renders the signup page view.
+     * @param {Object} req - Express request object.
+     * @param {Object} res - Express response object.
+     */
+    getSignUpPage(req, res) {
+        res.render('signUp');
+    },
+
 };
