@@ -16,8 +16,7 @@ const isAdmin = async (req, res, next) => {
         next(); // If logged in, proceed to the next middleware or route handler
 
     } catch (error) {
-        console.error("Error in isAdmin middleware:", error);
-        return res.status(500).send('Internal Server Error');
+        next(error)
     }
 };
 

@@ -90,12 +90,21 @@ module.exports = {
         }
         catch(err) {
             console.log('*** error creating a Ad', JSON.stringify(err))
+
             if(err.name === "SequelizeValidationError") {
                 const errors = dbErrorHandler(err);
-                return res.render('newAd', {
+                try {
+                    const ad = await db.Ad.findByPk(req.cookies.lastAdPosted);
+                    res.locals.email = ad.email || "";
+                    res.locals.updatedAt = ad.updatedAt || "";
+                    res.locals.isApproved = ad.isApproved || "";
+                } catch (e) { throw e}
+
+                return res.status(403).render('newAd', {
                     errors: errors,
                     formData: {title: title, description: description, price: price, email: email, phone: phone}
                 })
+
             } else {
                 res.status(500).send("Something bad happened, please try again later.", err.message)
             }

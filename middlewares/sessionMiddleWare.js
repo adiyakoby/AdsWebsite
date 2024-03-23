@@ -15,7 +15,7 @@ const sessionMiddleware = (req, res, next) => {
         res.locals.password = req.body.password || '';
         next(); // Proceed to the next middleware or route handler
     } catch (error) {
-        console.error("Error in sessionMiddleware:", error);
+        next(error)
     }
 
 
