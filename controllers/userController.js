@@ -2,21 +2,23 @@
 
 const db = require("../models");
 
-/**
- * Validates user access by checking the username and password against the database.
- * @param {string} name - The username to validate.
- * @param {string} pass - The password to validate.
- * @returns {boolean} - True if the user is valid, otherwise false.
- */
-const validateUserAccess = async function  (name, pass) {
-    const user = await db.User.findOne({where: {login: name}});
-    if (user) {
-        return user.comparePassword(pass);
-    }
-    return false;
-}
+
 
 module.exports = {
+
+    /**
+     * Validates user access by checking the username and password against the database.
+     * @param {string} name - The username to validate.
+     * @param {string} pass - The password to validate.
+     * @returns {boolean} - True if the user is valid, otherwise false.
+     */
+    async validateUserAccess (name, pass) {
+        const user = await db.User.findOne({where: {login: name}});
+        if (user) {
+            return user.comparePassword(pass);
+        }
+        return false;
+    },
 
     /**
      * Handles user login authentication.
@@ -26,7 +28,7 @@ module.exports = {
     async login(req, res) {
         try {
             const { username, password } = req.body;
-            const isValidUser = await validateUserAccess(username, password);
+            const isValidUser = await module.exports.validateUserAccess(username, password);
             if(isValidUser){
                 req.session.loggedIn = true;
                 res.redirect('/adminPage');
