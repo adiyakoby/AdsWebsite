@@ -49,7 +49,7 @@
      * @param {Array} ads - An array of ad objects
      */
     const updateAdsContainer = function(ads) {
-        if (ads.length !== 0) {
+        if (ads && ads.length !== 0) {
             adsContainer.innerHTML = '';
             ads.forEach(ad => adsContainer.appendChild(createCustomCard(ad)));
         } else {
