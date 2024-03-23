@@ -4,20 +4,34 @@ const db = require("../models");
 const { Sequelize } = require("sequelize");
 
 
-/**
- * Formats Sequelize validation errors into a more readable object.
- * @param {Error} e - Sequelize validation error.
- * @returns {Object} - Formatted validation errors.
- */
-const dbErrorHandler = function (e) {
-    const errors = {};
-    e.errors.forEach((item) => {
-        errors[item.path] = item.message;
-    });
-    return errors;
-}
+
+
 
 module.exports = {
+
+    // Messages
+    messages: {
+        adApproved: "Ad was approved successfully.",
+        adAlreadyApproved: "Ad was already approved.",
+        adDeleted: "Ad was deleted successfully.",
+        adNotFound: "Ad not found.",
+        errorMessage: "Something went wrong.",
+        serverError: "Internal Server Error",
+    },
+
+    /**
+     * Formats Sequelize validation errors into a more readable object.
+     * @param {Error} e - Sequelize validation error.
+     * @returns {Object} - Formatted validation errors.
+     */
+    dbErrorHandler(e) {
+        const errors = {};
+        e.errors.forEach((item) => {
+            errors[item.path] = item.message;
+        });
+        return errors;
+    },
+
 
     /**
      * Retrieves all approved ads.
@@ -92,13 +106,8 @@ module.exports = {
             console.log('*** error creating a Ad', JSON.stringify(err))
 
             if(err.name === "SequelizeValidationError") {
-                const errors = dbErrorHandler(err);
-                try {
-                    const ad = await db.Ad.findByPk(req.cookies.lastAdPosted);
-                    res.locals.email = ad.email || "";
-                    res.locals.updatedAt = ad.updatedAt || "";
-                    res.locals.isApproved = ad.isApproved || "";
-                } catch (e) { throw e}
+                const errors = module.exports.dbErrorHandler(err);
+                await module.exports.getLastAd(req, res);
 
                 return res.status(403).render('newAd', {
                     errors: errors,
@@ -106,7 +115,7 @@ module.exports = {
                 })
 
             } else {
-                res.status(500).send("Something bad happened, please try again later.", err.message)
+                res.status(500).send(module.exports.messages.serverError)
             }
 
         }
@@ -119,16 +128,15 @@ module.exports = {
      */
     async searchForAds(req, res) {
         try {
-            await db.Ad.findAll({ where:{title: { [Sequelize.Op.like]: `%${req.params.string}%`} ,isApproved: true}, order: [['createdAt', 'DESC']]})
-                .then((ads) => res.status(200).send(ads))
-                .catch((err) => {
-                    console.log('There was an error querying contacts', JSON.stringify(err))
-                    err.error = 1; // some error code for client side
-                    return res.status(400).send(err) // send the error to the client
-                });
-        }catch (err) {
-            console.log('There was an error querying contacts', JSON.stringify(err))
-            res.status(500).send("Internal Server Error");
+            const ads = await db.Ad.findAll({ where:{
+                    title: { [Sequelize.Op.like]: `%${req.params.string}%`},
+                    isApproved: true}, order: [['createdAt', 'DESC']]});
+
+            return res.status(200).send(ads);
+
+        }catch (e) {
+            console.log(module.exports.messages.errorMessage, e.message)
+            res.status(500).send(module.exports.messages.serverError);
         }
     },
 
@@ -140,19 +148,21 @@ module.exports = {
     async approveAd(req, res) {
         try {
             const ad = await db.Ad.findByPk(req.params.id);
-            if(ad) {
-                ad.isApproved = true;
-                ad.save();
-                res.status(204).send();
+            if(!ad) {
+                return res.status(404).send(module.exports.messages.adNotFound);
+            }
+            else if(ad && ad.isApproved === true) {
+                return res.status(200).send(module.exports.messages.adAlreadyApproved);
             }
             else {
-                throw Error("add not found");
+                ad.isApproved = true;
+                ad.save();
+                return res.status(200).send(module.exports.messages.adApproved);
             }
-
-        }catch (e) {
-            console.log("Something went wrong.", e.message);
+        } catch (e) {
+            console.log(this.messages.errorMessage, e.message)
+            return res.status(500).send(module.exports.messages.serverError);
         }
-
     },
 
     /**
@@ -165,14 +175,15 @@ module.exports = {
             const ad = await db.Ad.findByPk(req.params.id);
             if(ad) {
                 ad.destroy();
-                res.status(204).send();
+                return res.status(200).send(module.exports.messages.adDeleted);
             }
             else {
-                throw Error("add not found");
+                return res.status(404).send(module.exports.messages.adNotFound);
             }
 
         }catch (e) {
-            console.log("Something went wrong.", e.message)
+            console.log(module.exports.messages.errorMessage, e.message)
+            return res.status(500).send(module.exports.messages.serverError);
         }
 
     },
@@ -186,10 +197,14 @@ module.exports = {
     async getLastAd(req, res) {
         try {
             const ad = await db.Ad.findByPk(req.cookies.lastAdPosted);
+            res.locals.email = ad ? ad.email : "";
+            res.locals.updatedAt = ad ? ad.updatedAt : "";
+            res.locals.isApproved = ad ? ad.isApproved : "";
+
             return ad || "";
 
         }catch (e) {
-            console.log("Something went wrong.", e.message);
+            console.log(module.exports.messages.errorMessage, e.message);
             return null;
         }
     }
