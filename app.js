@@ -26,11 +26,11 @@ db.sequelize.sync()
       return Promise.all([
           db.User.findOrCreate({
             where: {login: 'admin'},
-            defaults: {login: 'admin', password: 'admin', accessLevel: 1}
+            defaults: {login: 'admin', password: 'admin', role: "admin"}
           }),
         db.User.findOrCreate({
           where: {login: 'admin2'},
-          defaults: {login: 'admin2', password: 'admin2', accessLevel: 1}
+          defaults: {login: 'admin2', password: 'admin2', role: "admin"}
         }),
         db.Ad.findOrCreate({
             where: {title: "Example1"},

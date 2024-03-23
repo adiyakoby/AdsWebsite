@@ -57,6 +57,11 @@ module.exports = (sequelize) => {
             }
 
         },
+        role : {
+            type: DataTypes.STRING,
+            allowNull: false,
+            defaultValue: "user"
+        }
 
     }, {
         sequelize, // We need to pass the connection instance
