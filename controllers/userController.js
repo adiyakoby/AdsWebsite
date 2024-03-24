@@ -66,8 +66,9 @@ module.exports = {
         try {
             const user = await db.User.create({login: username, password: password});
             req.session.loggedIn = true;
-            req.session.role = 'user';
-            res.redirect('userPage');
+            req.session.userId = user.id;
+            req.session.role = user.role;
+            res.redirect('/userPage');
         } catch (e) {
             console.log('*** error creating a user', JSON.stringify(e))
             if(e.name.includes('Sequelize')) {
@@ -75,7 +76,7 @@ module.exports = {
 
                 return res.status(403).render('signUp', {
                     errors: errors,
-                    formData: {username: username, password: password}
+                    formData: {login: username, password: password}
                 })
 
             } else {
