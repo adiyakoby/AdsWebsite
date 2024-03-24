@@ -74,18 +74,28 @@ const utils = (function () {
 
     /**
      * Generates HTML template for displaying a message when no ads are available.
+     * @param {string} adType - The type of ads ('readonly', 'user', 'pending', or 'approved').
      * @returns {string} - The HTML template for the message.
      */
-    function generateNoAdsTemplate() {
+    function generateNoAdsTemplate(adType) {
+        const adStatus = adType === 'readonly' || adType === 'user' ? '' : adType === 'pending' ? 'Pending' : 'Approved';
+
+        let message = '';
+        if (adType === 'user') {
+            message = `It seems you haven't published any ads yet. Why not publish your first ad now?`;
+        } else {
+            message = `Oops!${adStatus ? ` There are no ${adStatus.toLowerCase()} ads to show right now.` : ` It seems there are no ads to display at the moment.`}`;
+        }
+
         return `
         <div class="container mt-5">
             <div class="row">
                 <div class="col-lg-6 mx-auto">
                     <div class="card rounded shadow-lg">
                         <div class="card-body">
-                            <h2 class="card-title text-primary mb-4">No Ads Available</h2>
-                            <p class="card-text text-muted">Oops! It seems there are no ads to display at the moment.</p>
-                            <p class="card-text text-muted">Don't worry, new ads are added all the time. Please check back later for updates.</p>
+                            <h2 class="card-title text-primary mb-4">No ${adStatus ? `${adStatus} ` : ''}Ads Available</h2>
+                            <p class="card-text text-muted">${message}</p>
+                            ${adStatus ? '' : `<p class="card-text text-muted">Don't worry, new ads are added all the time. Please check back later for updates.</p>`}
                         </div>
                     </div>
                 </div>
@@ -93,6 +103,8 @@ const utils = (function () {
         </div>
     `;
     }
+
+
 
     /**
      * Fetches data from the server using the specified URL and method.
@@ -293,9 +305,9 @@ const utils = (function () {
     const updateAdsContainer = function(ads, adsContainer, adType, funcs) {
         if (ads && ads.length !== 0) {
             adsContainer.innerHTML = '';
-            ads.forEach(ad => adsContainer.appendChild(utils.createCustomCard(ad, adType, funcs)));
+            ads.forEach(ad => adsContainer.appendChild(createCustomCard(ad, adType, funcs)));
         } else {
-            adsContainer.innerHTML = utils.generateNoAdsTemplate();
+            adsContainer.innerHTML = generateNoAdsTemplate(adType);
         }
     }
 
@@ -325,9 +337,7 @@ const utils = (function () {
         showToast: showToast,
         createButton: createButton,
         createListItem: createListItem,
-        generateNoAdsTemplate: generateNoAdsTemplate,
         fetchData: fetchData,
-        createCustomCard: createCustomCard,
         getAds: getAds,
         resetError: resetError,
         showError: showError,
