@@ -9,12 +9,32 @@ module.exports = {
      * Validates user access by checking the username and password against the database.
      * @param {string} name - The username to validate.
      * @param {string} pass - The password to validate.
-     * @returns {boolean} - True if the user is valid, otherwise false.
+     * @returns {Promise<object>} - The user object if validation is successful.
+     * @throws {Error} - If user doesn't exist or wrong password.
      */
-    async validateUserAccess (name, pass) {
-        const user = await db.User.findOne({where: {login: name}});
-        return user || null;
+    async validateUserAccess(name, pass) {
+        try {
+            const user = await db.User.findOne({ where: { login: name } });
+            if (!user) {
+                const error = new Error("User doesn't exist.");
+                error.name = 'AuthenticationError'; // Custom error name
+                throw error;
+            }
+
+            const isPasswordCorrect = await user.comparePassword(pass);
+
+            if (!isPasswordCorrect) {
+                const error = new Error("Wrong password.");
+                error.name = 'AuthenticationError';
+                throw error;
+            }
+
+            return user;
+        } catch (error) {
+            throw error;
+        }
     },
+
 
     /**
      * Handles user login authentication.
@@ -22,28 +42,36 @@ module.exports = {
      * @param {Object} res - Express response object.
      */
     async login(req, res) {
+        const { username, password } = req.body;
         try {
-            const { username, password } = req.body;
             const user = await module.exports.validateUserAccess(username, password);
+            req.session.loggedIn = true;
+            req.session.role = user.role;
+            req.session.userId = user.id;
 
-            if(user){
-                req.session.loggedIn = true;
-                req.session.role = user.role;
-                req.session.userId = user.id;
+            if(user.role === 'admin')
+                return res.redirect('/adminPage');
+            else
+                return res.redirect('/userPage');
 
-                if(user.role === 'admin')
-                    return res.redirect('/adminPage');
-                else
-                    return res.redirect('/userPage');
-            }
-            else {
-                return res.status(401).render('login'); // If user is not valid, render the login page again
-            }
         } catch (e) {
-            console.log("Something went wrong.", e.message);
-            return res.status(500).render('error');
-        }
 
+            if (e.name.includes("AuthenticationError")) {
+                const errors = {}
+                if (e.message.includes("User")) {
+                    errors.username = e.message;
+                } else {
+                    errors.password = e.message;
+                }
+                return res.status(401).render('login', {
+                        errors: errors,
+                        formData: {username: username, password: password}
+                    });
+            } else {
+                console.log("Something went wrong.", e.message);
+                return res.status(500).render('error');
+            }
+        }
     },
 
     /**

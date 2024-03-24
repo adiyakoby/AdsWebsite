@@ -35,7 +35,7 @@ module.exports = {
      * @param {Object} res - Express response object.
      */
     getLoginPage(req, res) {
-        res.render('login');
+        res.render('login', {errors: {}, formData: {}});
     },
 
     /**

@@ -11,13 +11,16 @@
                 <form action="/users/login" method="post">
                     <div class="mb-3">
                         <label for="userName" class="form-label">Username:</label>
-                        <input type="text" class="form-control <%= username === '' ? '' : 'is-invalid' %>" id="userName" placeholder="Enter username" name="username" value="<%= username %>" required>
+                        <input type="text" class="form-control <%= errors.username  ? 'is-invalid' : '' %>" id="userName" placeholder="Enter username" name="username" value="<%= formData.username %>" required>
+                        <div class="invalid-feedback">
+                            <%= errors.username ? errors.username : '' %>
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">Password:</label>
-                        <input type="password" class="form-control <%= password === '' ? '' : 'is-invalid' %>" id="password" placeholder="Enter password" name="password" value="<%= password %>" required>
-                        <div class="invalid-feedback text-center mb-3">
-                            <%= username === '' ? '' : 'Username or password is incorrect.' %>
+                        <input type="password" class="form-control <%= errors.password ?  'is-invalid' : ''  %>" id="password" placeholder="Enter password" name="password" value="<%= formData.password %>" required>
+                        <div class="invalid-feedback">
+                            <%= errors.password ? errors.password : '' %>
                         </div>
                     </div>
                     <div class="text-center">
