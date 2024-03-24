@@ -80,7 +80,7 @@ module.exports = {
      * @param {Object} res - Express response object.
      */
     logOut(req, res) {
-        req.session.loggedIn =  res.locals.loggedIn = false;  // Clear loggedIn flag in session and response locals
+        req.session.destroy();
         res.redirect('/'); // Redirect to the home page
     },
 
