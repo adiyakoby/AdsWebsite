@@ -5,14 +5,12 @@
     const titleElement = document.getElementById("title");
     const descriptionElement = document.getElementById("description");
     const priceElement = document.getElementById("price");
-    const emailElement = document.getElementById("email");
     const phoneElement = document.getElementById("phone");
 
     // Error messages
     const titleErrorMessage = 'Title cannot be empty and must exceed 20 characters.';
     const descriptionErrorMessage = 'Description must not exceed 200 characters.';
     const priceErrorMessage = 'Price must be a valid number greater than 0.';
-    const emailErrorMessage = 'Email must be in a valid format.';
     const phoneErrorMessage = 'Phone number must be in the format XXX-XXXXXXX or XX-XXXXXXX.';
 
     /**
@@ -23,7 +21,6 @@
         titleElement.addEventListener('change', validateTitle);
         descriptionElement.addEventListener('change', validateDescription);
         priceElement.addEventListener('change', validatePrice);
-        emailElement.addEventListener('change', validateEmail);
         phoneElement.addEventListener('change', validatePhone);
 
     }); // end of DOMContentLoaded listener
@@ -70,19 +67,6 @@
         }
     }
 
-    /**
-     * Validates the email input field.
-     */
-    function validateEmail() {
-        const emailValue = emailElement.value.trim();
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-        if (!emailPattern.test(emailValue)) {
-            utils.showError(emailElement, emailErrorMessage);
-        } else {
-            utils.resetError(emailElement);
-        }
-    }
 
     /**
      * Validates the phone number input field.

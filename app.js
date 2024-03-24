@@ -40,7 +40,7 @@ db.sequelize.sync()
                 where: {title: "Example1"},
                 defaults: {
                     title: "Example1", description: "description example.", price: 100,
-                    phone: "02-6517289", email: "example@example.com", isApproved: false,
+                    phone: "02-6517289", isApproved: false,
                     user_id: 3
                 }
             }),
@@ -48,7 +48,7 @@ db.sequelize.sync()
                 where: {title: "Exampasdle2"},
                 defaults: {
                     title: "Example1", description: "description example.", price: 100,
-                    phone: "02-6517289", email: "example@example.com", isApproved: false,
+                    phone: "02-6517289", isApproved: false,
                     user_id: 3
                 }
             }),
@@ -56,7 +56,7 @@ db.sequelize.sync()
                 where: {title: "bbbbbbbbb"},
                 defaults: {
                     title: "bbbbbbbbb", description: "description example.", price: 100,
-                    phone: "02-6517289", email: "example@example.com", isApproved: false,
+                    phone: "02-6517289", isApproved: false,
                     user_id: 3
                 }
             }),
@@ -64,7 +64,7 @@ db.sequelize.sync()
                 where: {title: "aaaaa"},
                 defaults: {
                     title: "aaaaa", description: "description example.", price: 100,
-                    phone: "02-6517289", email: "example@example.com", isApproved: false,
+                    phone: "02-6517289",  isApproved: false,
                     user_id: 3
                 }
             }),
@@ -72,7 +72,7 @@ db.sequelize.sync()
                 where: {title: "Easd"},
                 defaults: {
                     title: "Easd", description: "description example.", price: 100,
-                    phone: "02-6517289", email: "example@example.com", isApproved: false,
+                    phone: "02-6517289",  isApproved: false,
                     user_id: 3
                 }
             }),

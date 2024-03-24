@@ -81,7 +81,6 @@ module.exports = {
 
             } else {
                 console.log("Something went wrong during registration.", e.message);
-                // res.status(500).send(module.exports.messages.serverError)
                 res.status(500).render('error');
 
             }
