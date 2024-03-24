@@ -1,7 +1,5 @@
 'use strict';
 
-const {getLastAd} = require('./adsController')
-
 module.exports = {
 
     /**
@@ -29,7 +27,6 @@ module.exports = {
      */
     async getNewAdPage(req, res) {
         try {
-            await getLastAd(req, res);
             res.render('newAd', {errors: {}, formData: {}});  // Render the new ad page with empty form data and errors object
         } catch (error) {
             console.error("Error in getNewAdPage:", error);

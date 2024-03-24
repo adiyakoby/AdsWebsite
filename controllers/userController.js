@@ -29,6 +29,7 @@ module.exports = {
                 req.session.loggedIn = true;
                 req.session.role = user.role;
                 req.session.userId = user.id;
+
                 if(user.role === 'admin')
                     return res.redirect('/adminPage');
                 else
