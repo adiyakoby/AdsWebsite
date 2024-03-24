@@ -124,7 +124,7 @@ const utils = (function () {
         const colDiv = createColDiv();
 
         // Create card div
-        const cardDiv = createCardDiv(ad.id);
+        const cardDiv = createCardDiv();
 
         // Create card body div
         const cardBodyDiv = createCardBodyDiv();
@@ -145,8 +145,10 @@ const utils = (function () {
         // Create card footer div
         const cardFooterDiv = createCardFooterDiv(ad, adType);
 
-        // Create button group div
-        const buttonGroup = createButtonGroup(ad, adType, funcs);
+
+        const buttonGroup = createButtonGroup(ad, adType, funcs); // Create button group div
+
+
 
         // Append elements to card
         appendElementsToCard(cardBodyDiv, cardTitle, cardText, listGroup, cardFooterDiv, buttonGroup);
@@ -186,13 +188,12 @@ const utils = (function () {
 
     /**
      * Creates a card div for the ad.
-     * @param {string} adId - The unique identifier for the ad.
+
      * @returns {HTMLDivElement} - The card div element.
      */
-    const createCardDiv = function (adId) {
+    const createCardDiv = function () {
         const cardDiv = document.createElement('div');
         cardDiv.classList.add('card', 'h-100', 'border-0', 'shadow');
-        cardDiv.id = adId; // Save the ad id for later use of modification
         return cardDiv;
     }
 
@@ -238,6 +239,9 @@ const utils = (function () {
      * @returns {HTMLDivElement} - The button group div element.
      */
     const createButtonGroup = function (ad, adType, funcs) {
+        if(adType === 'readonly') {
+            return document.createElement('div');
+        }
         const buttonGroup = document.createElement('div');
         buttonGroup.classList.add('d-flex', 'justify-content-center');
 
@@ -269,6 +273,34 @@ const utils = (function () {
         cardBodyDiv.appendChild(buttonGroup);
     }
 
+    /**
+     * Retrieves ads of a specific type (pending or approved) from the server and updates the UI.
+     * @param {string} url - The type of ads to retrieve (pending or approved).
+     */
+    const getAds = async function (url, adsContainer ,adType, funcs) {
+        try {
+            const res = await fetchData(url);
+            const ads = await res.json();
+            updateAdsContainer(ads, adsContainer, adType, funcs);
+        } catch (e) {
+            throw e
+
+        }
+    }
+
+    /**
+     * Updates the ads container with the provided ads.
+     * @param {Array} ads - An array of ad objects
+     */
+    const updateAdsContainer = function(ads, adsContainer, adType, funcs) {
+        if (ads && ads.length !== 0) {
+            adsContainer.innerHTML = '';
+            ads.forEach(ad => adsContainer.appendChild(utils.createCustomCard(ad, adType, funcs)));
+        } else {
+            adsContainer.innerHTML = utils.generateNoAdsTemplate();
+        }
+    };
+
 
 
     return {
@@ -278,5 +310,6 @@ const utils = (function () {
         generateNoAdsTemplate: generateNoAdsTemplate,
         fetchData: fetchData,
         createCustomCard: createCustomCard,
+        getAds: getAds,
     }
 })();

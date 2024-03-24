@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+
     // DOM elements
     const adsContainer = document.getElementById("ads-container");
     const spinner = document.getElementById("spinner-loader");
@@ -51,97 +52,13 @@
         }
     }
 
-    /**
-     * Retrieves ads of a specific type (pending or approved) from the server and updates the UI.
-     * @param {string} adType - The type of ads to retrieve (pending or approved).
-     */
-    const getAds = async function (adType) {
-        const res = await utils.fetchData(`/api/${adType}Ads`);
-        const ads = await res.json();
-        if(ads.length !== 0) {
-            adsContainer.innerHTML = '';
-            ads.forEach(ad => adsContainer.appendChild(utils.createCustomCard(ad, adType, {approveAd:approveAd,deleteAd: deleteAd})));
+    const getAds = async function(adType) {
+        try {
+            await utils.getAds(`/api/${adType}Ads`, adsContainer, 'pending', {approveAd: approveAd, deleteAd: deleteAd})
+        } catch (e) {
+            utils.showToast(toastLive, adErrorMessage, e.message);
         }
-        else {
-            adsContainer.innerHTML = utils.generateNoAdsTemplate();
-        }
-
     }
-
-
-    /**
-     * Creates a custom card element to display an ad with options to approve or delete.
-     * @param {Object} ad - The ad object containing information like title, description, etc.
-     * @param {string} adType - The type of ad (pending or approved).
-     * @returns {HTMLElement} - The custom card element representing the ad.
-     */
-    const createCustomCard = function (ad, adType) {
-
-        const colDiv = document.createElement('div');
-        colDiv.classList.add('col', 'mb-4');
-
-        const cardDiv = document.createElement('div');
-        cardDiv.classList.add('card', 'h-100', 'border-0', 'shadow');
-
-        const cardBodyDiv = document.createElement('div');
-        cardBodyDiv.classList.add('card-body');
-
-        const cardTitle = document.createElement('h5');
-        cardTitle.classList.add('card-title', 'mb-3');
-        cardTitle.textContent = ad.title;
-
-        const cardText = document.createElement('p');
-        cardText.classList.add('card-text', 'mb-4');
-        cardText.textContent = ad.description;
-
-        const listGroup = document.createElement('ul');
-        listGroup.classList.add('list-group', 'list-group-flush');
-
-        const listItemPrice = utils.createListItem('Price', ad.price);
-        const listItemPhone = utils.createListItem('Phone Number', ad.phone);
-        const listItemEmail = utils.createListItem('Email', ad.email);
-        const cardFooterDiv = document.createElement('div');
-        cardFooterDiv.classList.add('card-footer', 'text-muted');
-
-        const smallText = document.createElement('small');
-        smallText.textContent = `Last updated ${Math.floor((new Date() - new Date(ad.createdAt)) / (1000 * 60))} mins ago`;
-
-
-        const buttonGroup = document.createElement('div');
-        buttonGroup.classList.add('d-flex', 'justify-content-center');
-
-        // Create approve button if adType is pending
-        if (adType === 'pending') {
-            const buttonV = utils.createButton('V', 'btn-success', ad.id, approveAd);
-            buttonGroup.appendChild(buttonV);
-        }
-
-        // Create delete button
-        const buttonX = utils.createButton('X', 'btn-danger', ad.id, deleteAd);
-        buttonGroup.appendChild(buttonX);
-
-        // Append elements to card
-        cardBodyDiv.appendChild(cardTitle);
-        cardBodyDiv.appendChild(cardText);
-        listGroup.appendChild(listItemPrice);
-        if (ad.phone) listGroup.appendChild(listItemPhone);
-        listGroup.appendChild(listItemEmail);
-
-        cardFooterDiv.appendChild(smallText);
-
-        colDiv.appendChild(cardDiv);
-        cardDiv.appendChild(cardBodyDiv);
-        cardDiv.appendChild(listGroup);
-        cardDiv.appendChild(cardFooterDiv);
-        cardDiv.appendChild(buttonGroup);
-
-        return colDiv;
-    }
-
-
-
-
-
 
     /**
      * Handles the approval of an ad.
