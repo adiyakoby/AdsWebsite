@@ -44,40 +44,6 @@ db.sequelize.sync()
                     user_id: 3
                 }
             }),
-            await db.Ad.findOrCreate({
-                where: {title: "Exampasdle2"},
-                defaults: {
-                    title: "Example1", description: "description example.", price: 100,
-                    phone: "02-6517289", isApproved: false,
-                    user_id: 3
-                }
-            }),
-            await db.Ad.findOrCreate({
-                where: {title: "bbbbbbbbb"},
-                defaults: {
-                    title: "bbbbbbbbb", description: "description example.", price: 100,
-                    phone: "02-6517289", isApproved: false,
-                    user_id: 3
-                }
-            }),
-            await db.Ad.findOrCreate({
-                where: {title: "aaaaa"},
-                defaults: {
-                    title: "aaaaa", description: "description example.", price: 100,
-                    phone: "02-6517289",  isApproved: false,
-                    user_id: 3
-                }
-            }),
-            await db.Ad.findOrCreate({
-                where: {title: "Easd"},
-                defaults: {
-                    title: "Easd", description: "description example.", price: 100,
-                    phone: "02-6517289",  isApproved: false,
-                    user_id: 3
-                }
-            }),
-
-
         ]);
     }).then(() => {
         console.log('Admin user created.');
