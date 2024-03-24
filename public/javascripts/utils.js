@@ -111,6 +111,163 @@ const utils = (function () {
         }
     }
 
+    /**
+     * Creates a custom card element to display an ad with options to approve or delete.
+     * @param {Object} ad - The ad object containing information like title, description, etc.
+     * @param {string} adType - The type of ad ('user' or 'pending').
+     * @param {Object} funcs - Object containing functions for handling actions.
+     * @returns {HTMLElement} - The custom card element representing the ad.
+     */
+    const createCustomCard = function (ad, adType, funcs) {
+
+        // Create column div
+        const colDiv = createColDiv();
+
+        // Create card div
+        const cardDiv = createCardDiv(ad.id);
+
+        // Create card body div
+        const cardBodyDiv = createCardBodyDiv();
+
+        // Create card title element
+        const cardTitle = document.createElement('h5');
+        cardTitle.classList.add('card-title', 'mb-3');
+        cardTitle.textContent = ad.title;
+
+        // Create card text element
+        const cardText = document.createElement('p');
+        cardText.classList.add('card-text', 'mb-4');
+        cardText.textContent = ad.description;
+
+        // Create list group element
+        const listGroup = createListGroup(ad);
+
+        // Create card footer div
+        const cardFooterDiv = createCardFooterDiv(ad, adType);
+
+        // Create button group div
+        const buttonGroup = createButtonGroup(ad, adType, funcs);
+
+        // Append elements to card
+        appendElementsToCard(cardBodyDiv, cardTitle, cardText, listGroup, cardFooterDiv, buttonGroup);
+
+        // Append card to column
+        cardDiv.appendChild(cardBodyDiv);
+        cardDiv.appendChild(listGroup);
+        cardDiv.appendChild(cardFooterDiv);
+        cardDiv.appendChild(buttonGroup);
+        colDiv.appendChild(cardDiv);
+
+        return colDiv;
+    }
+
+    /**
+     * Creates a list group element.
+     * @returns {HTMLUListElement} - The list group element.
+     */
+    const createListGroup = function (ad) {
+        const listGroup = document.createElement('ul');
+        listGroup.classList.add('list-group', 'list-group-flush');
+        listGroup.appendChild(utils.createListItem('Price', ad.price));
+        listGroup.appendChild(utils.createListItem('Phone Number', ad.phone));
+        listGroup.appendChild(utils.createListItem('Email', ad.email));
+        return listGroup;
+    }
+
+    /**
+     * Creates a column div for the card.
+     * @returns {HTMLDivElement} - The column div element.
+     */
+    const createColDiv = function () {
+        const colDiv = document.createElement('div');
+        colDiv.classList.add('col', 'mb-4');
+        return colDiv;
+    }
+
+    /**
+     * Creates a card div for the ad.
+     * @param {string} adId - The unique identifier for the ad.
+     * @returns {HTMLDivElement} - The card div element.
+     */
+    const createCardDiv = function (adId) {
+        const cardDiv = document.createElement('div');
+        cardDiv.classList.add('card', 'h-100', 'border-0', 'shadow');
+        cardDiv.id = adId; // Save the ad id for later use of modification
+        return cardDiv;
+    }
+
+    /**
+     * Creates a card body div for the ad.
+     * @returns {HTMLDivElement} - The card body div element.
+     */
+    const createCardBodyDiv = function () {
+        const cardBodyDiv = document.createElement('div');
+        cardBodyDiv.classList.add('card-body');
+        return cardBodyDiv;
+    }
+
+    /**
+     * Creates a card footer div for the ad.
+     * @param {Object} ad - The ad object containing information about the ad.
+     * @param {string} adType - The type of ad ('user' or 'pending').
+     * @returns {HTMLDivElement} - The card footer div element.
+     */
+    const createCardFooterDiv = function (ad, adType) {
+        const cardFooterDiv = document.createElement('div');
+        cardFooterDiv.classList.add('card-footer', 'text-muted');
+        const smallText = document.createElement('small');
+        smallText.textContent = `Last updated ${Math.floor((new Date() - new Date(ad.createdAt)) / (1000 * 60))} mins ago`;
+        cardFooterDiv.appendChild(smallText);
+
+        if (adType === 'user') {
+            const isApprovedText = document.createElement('p');
+            isApprovedText.textContent = ad.isApproved ? '✅ Approved' : '⌛ Not yet approved';
+            isApprovedText.style.fontWeight = 'bold';
+            isApprovedText.style.marginBottom = '0';
+            cardFooterDiv.appendChild(isApprovedText);
+        }
+
+        return cardFooterDiv;
+    }
+
+    /**
+     * Creates a button group for the card actions.
+     * @param {Object} ad - The ad object containing information about the ad.
+     * @param {string} adType - The type of ad ('user' or 'pending').
+     * @param {Object} funcs - Object containing functions for handling actions.
+     * @returns {HTMLDivElement} - The button group div element.
+     */
+    const createButtonGroup = function (ad, adType, funcs) {
+        const buttonGroup = document.createElement('div');
+        buttonGroup.classList.add('d-flex', 'justify-content-center');
+
+        if (adType === 'pending') {
+            const buttonV = utils.createButton('V', 'btn-success', ad.id, funcs.approveAd);
+            buttonGroup.appendChild(buttonV);
+        }
+
+        const buttonX = utils.createButton('X', 'btn-danger', ad.id, funcs.deleteAd);
+        buttonGroup.appendChild(buttonX);
+
+        return buttonGroup;
+    }
+
+    /**
+     * Appends elements to the card.
+     * @param {HTMLElement} cardBodyDiv - The card body div element.
+     * @param {HTMLElement} cardTitle - The card title element.
+     * @param {HTMLElement} cardText - The card text element.
+     * @param {HTMLElement} listGroup - The list group element.
+     * @param {HTMLElement} cardFooterDiv - The card footer div element.
+     * @param {HTMLElement} buttonGroup - The button group element.
+     */
+    const appendElementsToCard = function (cardBodyDiv, cardTitle, cardText, listGroup, cardFooterDiv, buttonGroup) {
+        cardBodyDiv.appendChild(cardTitle);
+        cardBodyDiv.appendChild(cardText);
+        cardBodyDiv.appendChild(listGroup);
+        cardBodyDiv.appendChild(cardFooterDiv);
+        cardBodyDiv.appendChild(buttonGroup);
+    }
 
 
 
@@ -120,6 +277,6 @@ const utils = (function () {
         createListItem: createListItem,
         generateNoAdsTemplate: generateNoAdsTemplate,
         fetchData: fetchData,
-
+        createCustomCard: createCustomCard,
     }
 })();

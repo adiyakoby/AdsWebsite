@@ -43,10 +43,17 @@
         const ads = await res.json();
         if (ads.length !== 0) {
             adsContainer.innerHTML = '';
-            ads.forEach(ad => adsContainer.appendChild(createCustomCard(ad)));
+            ads.forEach(ad => adsContainer.appendChild(utils.createCustomCard(ad, 'user', {deleteAd: deleteAd})));
         } else {
             adsContainer.innerHTML = utils.generateNoAdsTemplate();
         }
+    }
+
+    const getAds2 = async function() {
+        const userUrl = '/api/userAds';
+        getAds(userUrl);
+
+
     }
 
 
