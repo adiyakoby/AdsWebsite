@@ -30,7 +30,7 @@ const utils = (function () {
      * @param {string} header - The header text for the toast notification.
      * @param {string} msg - The message text for the toast notification.
      */
-    const showToast = (header, msg) => {
+    const showToast = (toastLive, header, msg) => {
         toastLive.innerHTML = toastBodyCreator(header, msg);
 
         const toastInstance = new bootstrap.Toast(toastLive, {

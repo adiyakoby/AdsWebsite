@@ -6,7 +6,7 @@
     const spinner = document.getElementById("spinner-loader");
     const approvedAdsBtn = document.getElementById("approved-ads");
     const pendingAdsBtn = document.getElementById("pending-ads");
-    const toastLive = document.getElementById('liveToast')
+    const toastLive = document.getElementById('liveToast');
 
     // Messages
     const adErrorMessage = "Something went wrong, please try again."

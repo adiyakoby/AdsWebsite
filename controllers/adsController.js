@@ -207,7 +207,7 @@ module.exports = {
                 return res.status(404).send('User not found');
             }
 
-            const ads = await user.getAds();
+            const ads = await user.getAds({order: [['isApproved', 'ASC']] });
             return res.status(200).json(ads);
         } catch (error) {
             console.error("Error retrieving user ads:", error);

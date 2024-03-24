@@ -5,7 +5,8 @@
     // DOM elements
     const adsContainer = document.getElementById("ads-container");
     const spinner = document.getElementById("spinner-loader");
-    const toastLive = document.getElementById('liveToast')
+    const toastLive = document.getElementById('liveToast');
+
 
     // Messages
     const adErrorMessage = "Something went wrong, please try again.";
@@ -129,9 +130,9 @@
     const deleteAd = async function (btn) {
         try {
             const res = await utils.fetchData(`/api/ads/${btn.srcElement.dataset.adId}`, "DELETE");
-            utils.showToast("deleted", await res.text())
+            utils.showToast(toastLive,"deleted", await res.text())
         } catch (e) {
-            utils.showToast(adErrorMessage, e.message);
+            utils.showToast(toastLive,adErrorMessage, e.message);
         } finally {
             await fetchAds();
         }
