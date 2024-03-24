@@ -93,7 +93,6 @@ module.exports = {
 
             if(err.name === "SequelizeValidationError") {
                 const errors = module.exports.dbErrorHandler(err);
-                await module.exports.getLastAd(req, res);
 
                 return res.status(403).render('newAd', {
                     errors: errors,
@@ -174,22 +173,6 @@ module.exports = {
 
     },
 
-    /**
-     * Gets the details of the last ad posted.
-     * @param {Object} req - Express request object.
-     * @param {Object} res - Express response object.
-     * @returns {Promise<Object>} - A promise resolving to the last ad posted.
-     */
-    async getLastAd(req, res) {
-        try {
-            const ad = await db.Ad.findByPk(req.cookies.lastAdPosted);
-            return ad || "";
-
-        }catch (e) {
-            console.log(module.exports.messages.errorMessage, e.message);
-            return null;
-        }
-    },
 
     /**
      * Retrieves all ads belonging to the logged-in user.
