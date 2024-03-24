@@ -182,7 +182,6 @@ const utils = (function () {
         listGroup.classList.add('list-group', 'list-group-flush');
         listGroup.appendChild(utils.createListItem('Price', ad.price));
         listGroup.appendChild(utils.createListItem('Phone Number', ad.phone));
-        listGroup.appendChild(utils.createListItem('Email', ad.email));
         return listGroup;
     }
 
