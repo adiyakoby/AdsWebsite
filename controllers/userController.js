@@ -1,6 +1,7 @@
 'use strict';
 
 const db = require("../models");
+const {dbErrorHandler} = require('./adsController')
 
 module.exports = {
 
@@ -61,20 +62,28 @@ module.exports = {
      * @param {Object} res - Express response object.
      */
     async signup(req, res) {
+        const { username, password } = req.body;
         try {
-            const { username, email, password } = req.body;
-
-            const user = await db.User.create({
-                login: username,
-                password: password
-            });
-            if(user)
-                req.session.loggedIn = true;
-
-            res.redirect('/');
+            const user = await db.User.create({login: username, password: password});
+            req.session.loggedIn = true;
+            req.session.role = 'user';
+            res.redirect('userPage');
         } catch (e) {
-            console.log("Something went wrong during registration.", e.message);
-            res.status(500).render('error');
+            console.log('*** error creating a user', JSON.stringify(e))
+            if(e.name.includes('Sequelize')) {
+                const errors = dbErrorHandler(e);
+
+                return res.status(403).render('signUp', {
+                    errors: errors,
+                    formData: {username: username, password: password}
+                })
+
+            } else {
+                console.log("Something went wrong during registration.", e.message);
+                // res.status(500).send(module.exports.messages.serverError)
+                res.status(500).render('error');
+
+            }
         }
     }
 
