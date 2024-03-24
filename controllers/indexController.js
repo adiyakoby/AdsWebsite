@@ -26,13 +26,7 @@ module.exports = {
      * @param {Object} res - Express response object.
      */
     async getNewAdPage(req, res) {
-        try {
-            res.render('newAd', {errors: {}, formData: {}});  // Render the new ad page with empty form data and errors object
-        } catch (error) {
-            console.error("Error in getNewAdPage:", error);
-            res.status(500).send('Internal Server Error');
-        }
-
+        res.render('newAd', {errors: {}, formData: {}});  // Render the new ad page with empty form data and errors object
     },
 
     /**
