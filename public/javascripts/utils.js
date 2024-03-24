@@ -297,7 +297,27 @@ const utils = (function () {
         } else {
             adsContainer.innerHTML = utils.generateNoAdsTemplate();
         }
-    };
+    }
+
+    /**
+     * Resets error messages for the given input element.
+     * @param {Element} element - The input element to reset errors for
+     */
+    function resetError(element) {
+        element.classList.remove("is-invalid");
+        element.nextElementSibling.textContent = '';
+    }
+
+    /**
+     * Displays an error message for the given input element.
+     * @param {HTMLElement} element - The input element.
+     * @param {string} message - The error message to display.
+     */
+    function showError(element, message) {
+        element.classList.add("is-invalid");
+        element.nextElementSibling.textContent = message;
+
+    }
 
 
 
@@ -309,5 +329,7 @@ const utils = (function () {
         fetchData: fetchData,
         createCustomCard: createCustomCard,
         getAds: getAds,
+        resetError: resetError,
+        showError: showError,
     }
 })();

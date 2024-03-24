@@ -37,9 +37,9 @@
         const titleLength = titleValue.length;
 
         if (titleLength === 0 || titleLength > 20) {
-            showError(titleElement, titleErrorMessage);
+            utils.showError(titleElement, titleErrorMessage);
         } else {
-            resetError(titleElement);
+            utils.resetError(titleElement);
         }
     }
 
@@ -51,9 +51,9 @@
         const descriptionLength = descriptionValue.length;
 
         if (descriptionLength > 200) {
-            showError(descriptionElement, descriptionErrorMessage);
+            utils.showError(descriptionElement, descriptionErrorMessage);
         } else {
-            resetError(descriptionElement);
+            utils.resetError(descriptionElement);
         }
     }
 
@@ -64,9 +64,9 @@
         const priceValue = parseFloat(priceElement.value);
 
         if (isNaN(priceValue) || priceValue <= 0) {
-            showError(priceElement, priceErrorMessage);
+            utils.showError(priceElement, priceErrorMessage);
         } else {
-            resetError(priceElement);
+            utils.resetError(priceElement);
         }
     }
 
@@ -78,9 +78,9 @@
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         if (!emailPattern.test(emailValue)) {
-            showError(emailElement, emailErrorMessage);
+            utils.showError(emailElement, emailErrorMessage);
         } else {
-            resetError(emailElement);
+            utils.resetError(emailElement);
         }
     }
 
@@ -92,30 +92,11 @@
         const phonePattern = /^(\d{2,3}-\d{7})?$/;
 
         if (!phonePattern.test(phoneValue)) {
-            showError(phoneElement, phoneErrorMessage);
+            utils.showError(phoneElement, phoneErrorMessage);
         } else {
-            resetError(phoneElement);
+            utils.resetError(phoneElement);
         }
     }
 
-    /**
-     * Resets error messages for the given input element.
-     * @param {Element} element - The input element to reset errors for
-     */
-    function resetError(element) {
-        element.classList.remove("is-invalid");
-        element.nextElementSibling.textContent = '';
-    }
-
-    /**
-     * Displays an error message for the given input element.
-     * @param {HTMLElement} element - The input element.
-     * @param {string} message - The error message to display.
-     */
-    function showError(element, message) {
-        element.classList.add("is-invalid");
-        element.nextElementSibling.textContent = message;
-
-    }
 
 })();
