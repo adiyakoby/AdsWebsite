@@ -24,9 +24,8 @@
                 <% if (loggedIn === true) { %>
                     <% if (role === 'admin') { %>
                         <a class="btn btn-primary me-2" type="button" href="/adminPage">Admin Page</a>
-                        <% } else { %>
-                            <a class="btn btn-primary me-2" type="button" href="/userPage">Personal Area</a>
-                        <% } %>
+                    <% } %>
+                    <a class="btn btn-primary me-2" type="button" href="/userPage">Personal Area</a>
                     <a class="btn btn-outline-primary me-2" type="button" href="/users/logout">Logout</a>
 
 

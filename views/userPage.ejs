@@ -20,16 +20,14 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <% if (loggedIn === true) { %>
-                <a class="btn btn-outline-primary mx-2" type="button" href="/newAd">Post new Ad</a>
-            <% } %>
+            <a class="btn btn-outline-primary mx-2" type="button" href="/newAd">Post new Ad</a>
             <div class="ms-auto">
-                <% if (loggedIn === true) { %>
+                    <% if (role === 'admin') { %>
+                        <a class="btn btn-primary me-2" type="button" href="/adminPage">Admin Page</a>
+                    <% } %>
                     <a class="btn btn-primary me-2" type="button" href="/userPage">Personal Area</a>
                     <a class="btn btn-outline-primary me-2" type="button" href="/users/logout">Logout</a>
-                <% } else { %>
-                    <a class="btn btn-outline-primary me-2" type="button" href="/login">Login</a>
-                <% } %>
+
                 <button class="btn btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#myModal">Who am i</button>
             </div>
         </div>
