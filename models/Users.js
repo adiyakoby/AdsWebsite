@@ -52,11 +52,15 @@ module.exports = (sequelize) => {
             allowNull: false,
             unique: {
                 args: true,
-                msg: "login name is taken."
+                msg: "username name is taken."
             },
             validate: {
-                notEmpty: true,
-                len: [3,20]
+                notEmpty: {msg: 'username cannot be empty.'},
+                len: {
+                    args: [3, 20],
+                    msg: "Username length must be between 3 to 20 characters."
+                },
+                isAlphanumeric: {msg: "username must contain only letters and numbers."},
             }
 
         },
@@ -64,7 +68,10 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                len: [3, 20]
+                notEmpty: {msg: "password cannot be empty."},
+                len: {args:[4, 20],
+                msg: "password length must be between 4 to 20 characters."
+                    }
             }
         },
         role : {

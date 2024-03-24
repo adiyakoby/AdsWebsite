@@ -53,7 +53,7 @@ module.exports = {
      * @param {Object} res - Express response object.
      */
     getSignUpPage(req, res) {
-        res.render('signUp');
+        res.render('signUp', {errors: {}, formData: {}});
     },
 
     /**
