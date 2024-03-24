@@ -183,10 +183,6 @@ module.exports = {
     async getLastAd(req, res) {
         try {
             const ad = await db.Ad.findByPk(req.cookies.lastAdPosted);
-            res.locals.email = ad ? ad.email : "";
-            res.locals.updatedAt = ad ? ad.updatedAt : "";
-            res.locals.isApproved = ad ? ad.isApproved : "";
-
             return ad || "";
 
         }catch (e) {
