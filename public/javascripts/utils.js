@@ -287,7 +287,7 @@ const utils = (function () {
      * Retrieves ads of a specific type (pending or approved) from the server and updates the UI.
      * @param {string} url - The type of ads to retrieve (pending or approved).
      */
-    const getAds = async function (url, adsContainer ,adType, funcs) {
+    const getUsersAds = async function (url, adsContainer ,adType, funcs) {
         try {
             const res = await fetchData(url);
             const ads = await res.json();
@@ -338,7 +338,7 @@ const utils = (function () {
         createButton: createButton,
         createListItem: createListItem,
         fetchData: fetchData,
-        getAds: getAds,
+        getUsersAds: getUsersAds,
         resetError: resetError,
         showError: showError,
     }

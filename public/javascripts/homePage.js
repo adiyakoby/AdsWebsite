@@ -38,7 +38,7 @@
         try {
             const searchString = string ? `/${encodeURIComponent(string.trim())}` : '';
             spinner.classList.remove('d-none');
-            await utils.getAds(`/api/approvedAds${searchString}`, adsContainer, 'readonly', {});
+            await utils.getUsersAds(`/api/approvedAds${searchString}`, adsContainer, 'readonly', {});
         } catch (error) {
             console.log('Error message:', error);
             utils.showToast(toastLive, adErrorMessage, error.message);

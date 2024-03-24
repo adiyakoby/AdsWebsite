@@ -17,19 +17,19 @@
      * Event listener to ensure DOM content is fully loaded
      */
     document.addEventListener('DOMContentLoaded', async function () {
-        await getAds('pending');
+        await fetchAds('pending');
 
         // Event listeners for switching between pending and approved ads
         approvedAdsBtn.addEventListener('click', async function () {
             pendingAdsBtn.classList = 'btn btn-secondary btn-lg col-4';
             approvedAdsBtn.classList = 'btn btn-primary btn-lg col-4';
-            await getAds('approved');
+            await fetchAds('approved');
         });
 
         pendingAdsBtn.addEventListener('click',async function () {
             approvedAdsBtn.classList = 'btn btn-secondary btn-lg col-4';
             pendingAdsBtn.classList = 'btn btn-primary btn-lg col-4';
-            await getAds('pending');
+            await fetchAds('pending');
         });
 
 
@@ -38,10 +38,10 @@
     /**
      * Retrieves all ads from the server and updates the UI.
      */
-    const getAds = async function(adType) {
+    const fetchAds = async function(adType) {
         try {
             spinner.classList.remove('d-none');
-            await utils.getAds(`/api/${adType}Ads`, adsContainer, adType, {approveAd: approveAd, deleteAd: deleteAd})
+            await utils.getUsersAds(`/api/${adType}Ads`, adsContainer, adType, {approveAd: approveAd, deleteAd: deleteAd})
         } catch (e) {
             utils.showToast(toastLive, adErrorMessage, e.message);
         } finally {
@@ -60,7 +60,7 @@
         } catch (e) {
             utils.showToast(toastLive, adErrorMessage, e.message);
         } finally {
-            await getAds('pending');
+            await fetchAds('pending');
         }
     }
 
@@ -76,7 +76,7 @@
             utils.showToast(toastLive, adErrorMessage, e.message);
         } finally {
             const adType = pendingAdsBtn.classList.contains('btn-primary') ? 'pending' : 'approved';
-            await getAds(adType);
+            await fetchAds(adType);
         }
     }
 

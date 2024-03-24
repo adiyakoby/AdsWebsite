@@ -82,10 +82,10 @@ module.exports = {
      * @param {Object} res - Express response object.
      */
     async postAd(req, res) {
-        const { title, description, price, email, phone } = req.body;
+        const { title, description, price, phone } = req.body;
         try {
-            const ad = await db.Ad.create({ title, description, price, phone, email });
-            res.cookie('lastAdPosted', ad.id); // no maxAge so we will remember until user delete
+            const user_id = req.session.userId;
+            await db.Ad.create({ title, description, price, phone, user_id });
             res.redirect('/success');
         }
         catch(err) {
@@ -96,7 +96,7 @@ module.exports = {
 
                 return res.status(403).render('newAd', {
                     errors: errors,
-                    formData: {title: title, description: description, price: price, email: email, phone: phone}
+                    formData: {title: title, description: description, price: price, phone: phone}
                 })
 
             } else {
@@ -185,8 +185,7 @@ module.exports = {
             if(!user){
                 return res.status(404).send('User not found');
             }
-
-            const ads = await user.getAds({order: [['isApproved', 'ASC']] });
+            const ads = await user.getAds();
             return res.status(200).json(ads);
         } catch (error) {
             console.error("Error retrieving user ads:", error);

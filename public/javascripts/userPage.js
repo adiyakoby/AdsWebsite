@@ -23,27 +23,12 @@
     });
 
     /**
-     * Fetches all ads from the server.
-     */
-    async function fetchAds() {
-        spinner.classList.remove('d-none');
-        try {
-            await getAds();
-        } catch (err) {
-            console.log('Error message:', err);
-        } finally {
-            spinner.classList.add('d-none');
-        }
-    }
-
-
-    /**
      * Retrieves all ads from the server and updates the UI.
      */
-    const getAds = async function() {
+    const fetchAds = async function() {
         try {
             spinner.classList.remove('d-none');
-            await utils.getAds(userUrl, adsContainer, adsType, { deleteAd: deleteAd})
+            await utils.getUsersAds(userUrl, adsContainer, adsType, { deleteAd: deleteAd})
         } catch (e) {
             utils.showToast(toastLive, adErrorMessage, e.message);
         } finally {

@@ -81,23 +81,6 @@ module.exports = (sequelize) => {
             }
 
         },
-
-        // Email of the advertiser
-        email: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            validate: {
-                notEmpty: {
-                    args: true,
-                    msg: "Email cannot be empty."
-                },
-                isEmail: {
-                    args: true,
-                    msg: "Email isn't valid, please provide valid email."
-                }
-            }
-        },
-
         // Indicates whether the advertisement is approved by the admin
         isApproved: {
             type: DataTypes.BOOLEAN,
@@ -107,7 +90,6 @@ module.exports = (sequelize) => {
 
     }, {
         sequelize, // We need to pass the connection instance
-        hook: {},
         modelName: 'Ad'
     });
     return Ad;
