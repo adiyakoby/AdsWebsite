@@ -40,11 +40,14 @@
     /**
      * Retrieves all ads from the server and updates the UI.
      */
-    const getAds = async function() {
+    const getAds = async function(adType) {
         try {
-            await utils.getAds(userUrl, adsContainer, adsType, {deleteAd:deleteAd})
+            spinner.classList.remove('d-none');
+            await utils.getAds(userUrl, adsContainer, adsType, { deleteAd: deleteAd})
         } catch (e) {
             utils.showToast(toastLive, adErrorMessage, e.message);
+        } finally {
+            spinner.classList.add('d-none');
         }
     }
 

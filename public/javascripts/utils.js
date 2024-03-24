@@ -145,10 +145,8 @@ const utils = (function () {
         // Create card footer div
         const cardFooterDiv = createCardFooterDiv(ad, adType);
 
-
+        // Create buttons group
         const buttonGroup = createButtonGroup(ad, adType, funcs); // Create button group div
-
-
 
         // Append elements to card
         appendElementsToCard(cardBodyDiv, cardTitle, cardText, listGroup, cardFooterDiv, buttonGroup);

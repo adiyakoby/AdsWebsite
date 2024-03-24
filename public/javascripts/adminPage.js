@@ -17,46 +17,35 @@
      * Event listener to ensure DOM content is fully loaded
      */
     document.addEventListener('DOMContentLoaded', async function () {
-        await fetchAds('pending');
+        await getAds('pending');
 
         // Event listeners for switching between pending and approved ads
         approvedAdsBtn.addEventListener('click', async function () {
             pendingAdsBtn.classList = 'btn btn-secondary btn-lg col-4';
             approvedAdsBtn.classList = 'btn btn-primary btn-lg col-4';
-            await fetchAds('approved');
+            await getAds('approved');
         });
 
         pendingAdsBtn.addEventListener('click',async function () {
             approvedAdsBtn.classList = 'btn btn-secondary btn-lg col-4';
             pendingAdsBtn.classList = 'btn btn-primary btn-lg col-4';
-            await fetchAds('pending');
+            await getAds('pending');
         });
 
 
     });
 
-
     /**
-     * Fetches ads based on their type (pending or approved) from the server.
-     * @param {string} adsType - The type of ads to fetch (pending or approved).
+     * Retrieves all ads from the server and updates the UI.
      */
-    async function fetchAds(adsType) {
-        spinner.classList.remove('d-none');
-        try {
-            await getAds(adsType);
-            spinner.classList.add('d-none');
-        } catch (err) {
-            console.log('Error message:', err);
-        } finally {
-            spinner.classList.add('d-none');
-        }
-    }
-
     const getAds = async function(adType) {
         try {
-            await utils.getAds(`/api/${adType}Ads`, adsContainer, 'pending', {approveAd: approveAd, deleteAd: deleteAd})
+            spinner.classList.remove('d-none');
+            await utils.getAds(`/api/${adType}Ads`, adsContainer, adType, {approveAd: approveAd, deleteAd: deleteAd})
         } catch (e) {
             utils.showToast(toastLive, adErrorMessage, e.message);
+        } finally {
+            spinner.classList.add('d-none');
         }
     }
 
@@ -71,7 +60,7 @@
         } catch (e) {
             utils.showToast(toastLive, adErrorMessage, e.message);
         } finally {
-            await fetchAds('pending');
+            await getAds('pending');
         }
     }
 
@@ -87,7 +76,7 @@
             utils.showToast(toastLive, adErrorMessage, e.message);
         } finally {
             const adType = pendingAdsBtn.classList.contains('btn-primary') ? 'pending' : 'approved';
-            await fetchAds(adType);
+            await getAds(adType);
         }
     }
 
