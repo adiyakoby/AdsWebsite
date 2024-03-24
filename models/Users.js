@@ -13,6 +13,10 @@ module.exports = (sequelize) => {
 
     class User extends Model {
 
+        /**
+         * Establishes the association between the User model and the Ad model.
+         * @param {Object} models - Object containing all defined Sequelize models.
+         */
         static associate(models) {
             // define association here
             User.hasMany(models.Ad, {

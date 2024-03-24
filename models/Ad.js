@@ -9,6 +9,11 @@ const { DataTypes, Model } = require('sequelize');
  */
 module.exports = (sequelize) => {
     class Ad extends Model {
+
+        /**
+         * Establishes the association between the Ad model and the User model.
+         * @param {Object} models - Object containing all defined Sequelize models.
+         */
         static associate(models) {
             // define association here
             Ad.belongsTo(models.User, {
