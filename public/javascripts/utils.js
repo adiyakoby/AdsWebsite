@@ -226,7 +226,7 @@ const utils = (function () {
         const cardFooterDiv = document.createElement('div');
         cardFooterDiv.classList.add('card-footer', 'text-muted');
         const smallText = document.createElement('small');
-        smallText.textContent = `Last updated ${Math.floor((new Date() - new Date(ad.createdAt)) / (1000 * 60))} mins ago`;
+        smallText.textContent = `Last updated ${Math.floor((new Date() - new Date(ad.updatedAt)) / (1000 * 60))} mins ago`;
         cardFooterDiv.appendChild(smallText);
 
         if (adType === 'user') {
